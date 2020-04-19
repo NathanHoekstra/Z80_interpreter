@@ -1,6 +1,6 @@
 class Utilities:
     @staticmethod
-    def read_asm_file(file: str) -> list:
+    def read_asm_file(file: str) -> [list]:
         """
         Read an assembly file and return the contents as a list
         :param file: The file to be read from
@@ -8,8 +8,11 @@ class Utilities:
         """
         lines = []
         if not file.endswith(".asm"):
-            raise NameError("Incorrect file specified")
+            raise NameError("Filetype not supported, please specify a .asm file")
         asm_file = open(file=file, mode="r")
         for line in asm_file.readlines():
-            lines.append(line.split())
+            line = line.split(';')[0]  # don't parse the comments
+            # check if the line is not empty
+            if line:
+                lines.append(line.split())
         return lines
