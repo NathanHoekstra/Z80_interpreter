@@ -14,6 +14,7 @@ class Token(object):
         return self.__str__()
 
 
+# tokenizer :: str -> int -> Token
 def tokenizer(item: str, line_number: int) -> Token:
     # TODO: Tokenize stuff here
     return Token(item, None, line_number)
