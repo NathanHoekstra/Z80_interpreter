@@ -14,5 +14,5 @@ class Utilities:
             line = line.split(';')[0]  # don't parse the comments
             # check if the line is not empty
             if line:
-                lines.append(line.split())
+                lines.append(line.split('  ')[0])
         return lines
