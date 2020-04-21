@@ -16,7 +16,19 @@ class Token(object):
 
 # tokenizer :: str -> int -> Token
 def tokenizer(item: str, line_number: int) -> Token:
+    # Capitalize items
+    item = item.upper()
     # TODO: Tokenize stuff here
+    if item.startswith("#"):
+        return Token("DECIMAL", item.split("#")[1], line_number)
+    elif item.startswith("$"):
+        return Token("HEX", item.split("$")[1], line_number)
+    elif item.isdigit():
+        return Token("DECIMAL", item, line_number)
+    elif item == "A" or item == "B":
+        return Token("REGISTER", item, line_number)
+    elif item == "A," or item == "B,":
+        return Token("REGISTER", item[0], line_number)
     return Token(item, None, line_number)
 
 
@@ -26,6 +38,6 @@ def lexer(code: List[str], line_num: int = 0) -> List[Token]:
         return []
     else:
         head, *tail = code
-        result = list(map(lambda x: tokenizer(x, line_num), head.split()))
+        result = map(lambda x: tokenizer(x, line_num), head.split())
         line_num += 1
-        return result + lexer(tail, line_num)
+        return list(result) + lexer(tail, line_num)
