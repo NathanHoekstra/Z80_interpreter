@@ -91,6 +91,10 @@ class TokenType(Enum):
     DECIMAL = 100
     HEXADECIMAL = 101
     BINARY = 102
+
+    # --- Labels ---
+    LABEL = 110
+
     # --- Unknown ---
     UNKNOWN = 150
 
