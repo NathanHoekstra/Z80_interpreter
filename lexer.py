@@ -1,4 +1,5 @@
 from typing import List
+import regex
 
 
 class Token(object):
@@ -18,7 +19,8 @@ class Token(object):
 def tokenizer(item: str, line_number: int) -> Token:
     # Capitalize items
     item = item.upper()
-    # TODO: Tokenize stuff here
+    # TODO: Tokenize stuff here, change to regex operations
+    print(item)
     if item.startswith("#"):
         return Token("DECIMAL", item.split("#")[1], line_number)
     elif item.startswith("$"):
