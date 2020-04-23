@@ -1,9 +1,11 @@
 from typing import List
+from enums import TokenType
+import re
 import regex
 
 
 class Token(object):
-    def __init__(self, token_type, value, line):
+    def __init__(self, token_type: TokenType, value: str, line: int):
         self.token_type = token_type
         self.value = value
         self.line = line
@@ -16,22 +18,21 @@ class Token(object):
 
 
 # tokenizer :: str -> int -> Token
-def tokenizer(item: str, line_number: int) -> Token:
-    # Capitalize items
-    item = item.upper()
-    # TODO: Tokenize stuff here, change to regex operations
-    print(item)
-    if item.startswith("#"):
-        return Token("DECIMAL", item.split("#")[1], line_number)
-    elif item.startswith("$"):
-        return Token("HEX", item.split("$")[1], line_number)
-    elif item.isdigit():
-        return Token("DECIMAL", item, line_number)
-    elif item == "A" or item == "B":
-        return Token("REGISTER", item, line_number)
-    elif item == "A," or item == "B,":
-        return Token("REGISTER", item[0], line_number)
-    return Token(item, None, line_number)
+def tokenizer(item: str, rules: List, line_number: int) -> Token:
+    if len(rules) == 0:
+        # We went through the rules and didn't found a match
+        return Token(TokenType.UNKNOWN, item, line_number)
+    else:
+        head, *tail = rules
+        rule, token_type = head
+        match = re.match(rule, item)
+
+        # No match has been found, lets try the next rule
+        if not match:
+            return tokenizer(item, tail, line_number)
+
+        # A match has been found so lets return the token
+        return Token(token_type, item, line_number)
 
 
 # lexer :: List[str] -> int -> List[Token]
@@ -40,6 +41,6 @@ def lexer(code: List[str], line_num: int = 0) -> List[Token]:
         return []
     else:
         head, *tail = code
-        result = map(lambda x: tokenizer(x, line_num), head.split())
+        result = map(lambda x: tokenizer(x, regex.regex_rules, line_num), head.split())
         line_num += 1
         return list(result) + lexer(tail, line_num)
