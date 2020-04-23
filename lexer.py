@@ -11,7 +11,7 @@ class Token(object):
         self.line = line
 
     def __str__(self):
-        return f"Token(Type:{self.token_type}, Value:{self.value}, Line:{self.line})"
+        return f"Token(Type:{self.token_type}, Value:'{self.value}', Line:{self.line})"
 
     def __repr__(self):
         return self.__str__()

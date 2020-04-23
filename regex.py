@@ -91,4 +91,3 @@ regex_rules = [
     (r'$.*', TokenType.HEXADECIMAL),
     (r'%.*', TokenType.BINARY)
 ]
-

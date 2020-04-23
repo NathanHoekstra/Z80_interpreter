@@ -97,4 +97,3 @@ class TokenType(Enum):
 
     # --- Unknown ---
     UNKNOWN = 150
-
