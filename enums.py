@@ -71,11 +71,22 @@ class TokenType(Enum):
     SRL = 65
     SUB = 66
     XOR = 67
-    # --- Registers ---
+    # --- 8-bit Registers ---
     REGISTER_A = 68
     REGISTER_B = 69
     REGISTER_C = 70
-    REGISTER_F = 71
+    REGISTER_D = 71
+    REGISTER_E = 72
+    REGISTER_F = 73
+    REGISTER_H = 74
+    REGISTER_L = 75
+
+    # -- 16-bit Registers ---
+    REGISTER_AF = 76
+    REGISTER_BC = 77
+    REGISTER_DE = 78
+    REGISTER_HL = 79
+
     # --- Values ---
     DECIMAL = 100
     HEXADECIMAL = 101

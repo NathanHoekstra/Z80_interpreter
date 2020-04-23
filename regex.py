@@ -68,11 +68,20 @@ regex_rules = [
     (r'srl|SRL', TokenType.SRL),
     (r'sub|SUB', TokenType.SUB),
     (r'xor|XOR', TokenType.XOR),
-    # Registers
+    # 16-bit registers
+    (r'af|AF', TokenType.REGISTER_AF),
+    (r'bc|BC', TokenType.REGISTER_BC),
+    (r'de|DE', TokenType.REGISTER_DE),
+    (r'hl|HL', TokenType.REGISTER_HL),
+    # 8-bit Registers
     (r'a|A', TokenType.REGISTER_A),
     (r'b|B', TokenType.REGISTER_B),
     (r'c|C', TokenType.REGISTER_C),
+    (r'd|D', TokenType.REGISTER_D),
+    (r'e|E', TokenType.REGISTER_E),
     (r'f|F', TokenType.REGISTER_F),
+    (r'h|H', TokenType.REGISTER_H),
+    (r'l|L', TokenType.REGISTER_L),
     # Values
     (r'#.*', TokenType.DECIMAL),
     (r'\d', TokenType.DECIMAL),
