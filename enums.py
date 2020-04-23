@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class TokenType(Enum):
+    # --- Opcodes ---
     ADC = 0
     ADD = 1
     AND = 2
@@ -70,9 +71,15 @@ class TokenType(Enum):
     SRL = 65
     SUB = 66
     XOR = 67
-    # Registers
+    # --- Registers ---
     REGISTER_A = 68
     REGISTER_B = 69
     REGISTER_C = 70
     REGISTER_F = 71
+    # --- Values ---
+    DECIMAL = 100
+    HEXADECIMAL = 101
+    BINARY = 102
+    # --- Unknown ---
+    UNKNOWN = 150
 
