@@ -49,6 +49,7 @@ regex_rules = [
     (r'res|RES', TokenType.RES),
     (r'reti|RETI', TokenType.RETI),
     (r'retn|RETN', TokenType.RETN),
+    (r'ret|RET', TokenType.RET),
     (r'rlca|RLCA', TokenType.RLCA),
     (r'rla|RLA', TokenType.RLA),
     (r'rlc|RLC', TokenType.RLC),
@@ -68,6 +69,8 @@ regex_rules = [
     (r'srl|SRL', TokenType.SRL),
     (r'sub|SUB', TokenType.SUB),
     (r'xor|XOR', TokenType.XOR),
+    # Labels
+    (r'.*:', TokenType.LABEL),
     # 16-bit registers
     (r'af|AF', TokenType.REGISTER_AF),
     (r'bc|BC', TokenType.REGISTER_BC),
