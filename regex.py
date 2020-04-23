@@ -88,6 +88,6 @@ regex_rules = [
     # Values
     (r'#.*', TokenType.DECIMAL),
     (r'\d', TokenType.DECIMAL),
-    (r'$.*', TokenType.HEXADECIMAL),
+    (r'\$.*', TokenType.HEXADECIMAL),
     (r'%.*', TokenType.BINARY)
 ]
