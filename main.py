@@ -1,6 +1,4 @@
-from utilities import Utilities
-from display import Display
-from cpu import Cpu
+from helpers.utilities import Utilities
 import lexer
 
 

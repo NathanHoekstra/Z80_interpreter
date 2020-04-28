@@ -1,4 +1,4 @@
-from enums import TokenType
+from helpers.enums import TokenType
 
 regex_rules = [
     # Opcodes

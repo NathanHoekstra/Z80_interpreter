@@ -1,7 +1,7 @@
 from typing import List
-from enums import TokenType
+from helpers.enums import TokenType
 import re
-import regex
+from helpers import regex
 
 
 class Token(object):
