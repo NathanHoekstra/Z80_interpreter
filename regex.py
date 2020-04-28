@@ -70,7 +70,7 @@ regex_rules = [
     (r'sub|SUB', TokenType.SUB),
     (r'xor|XOR', TokenType.XOR),
     # Labels
-    (r'.*:', TokenType.LABEL),
+    (r'.*:|[a-zA-Z]{2,}', TokenType.LABEL),
     # 16-bit registers
     (r'af|AF', TokenType.REGISTER_AF),
     (r'bc|BC', TokenType.REGISTER_BC),
