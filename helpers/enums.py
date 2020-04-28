@@ -77,6 +77,8 @@ class TokenType(Enum):
     DECIMAL = 80
     HEXADECIMAL = 81
     BINARY = 82
+    VALUE = 83  # This is decimal, hex or binary
+    BIT_VALUE = 84  # Value between 0 and 7
 
     # --- Labels ---
     LABEL = 90

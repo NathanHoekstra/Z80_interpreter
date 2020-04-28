@@ -72,6 +72,7 @@ regex_rules = [
     (r'nc|NC', TokenType.CONDITION_NC),
     (r'c|C', TokenType.CONDITION_C),
     # Values
+    (r'[0-7]{1}', TokenType.BIT_VALUE),
     (r'#.*', TokenType.DECIMAL),
     (r'\d', TokenType.DECIMAL),
     (r'\$.*', TokenType.HEXADECIMAL),
