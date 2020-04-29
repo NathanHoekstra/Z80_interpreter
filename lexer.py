@@ -20,18 +20,18 @@ class Token(object):
 # tokenizer :: str -> int -> Token
 def tokenizer(item: str, rules: List, line_number: int) -> Token:
     if len(rules) == 0:
-        # We went through the rules and didn't found a match
+        # We went through the rules and didn't find a match
         return Token(TokenType.UNKNOWN, item, line_number)
     else:
         head, *tail = rules
         rule, token_type = head
         match = re.match(rule, item)
 
-        # No match has been found, lets try the next rule
+        # No match has been found, let's try the next rule
         if not match:
             return tokenizer(item, tail, line_number)
 
-        # A match has been found so lets return the token
+        # A match has been found so let's return the token
         return Token(token_type, item, line_number)
 
 
