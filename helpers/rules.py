@@ -47,7 +47,7 @@ parser_rules = [
     (tt.CALL, tt.CONDITION_NC, tt.LABEL),
     (tt.CALL, tt.CONDITION_C, tt.LABEL),
     # CCF instructions
-    tt.CCF,
+    (tt.CCF,),
     # CP instructions
     (tt.CP, tt.REGISTER_A),
     (tt.CP, tt.REGISTER_B),
@@ -58,9 +58,9 @@ parser_rules = [
     (tt.CP, tt.REGISTER_L),
     (tt.CP, tt.VALUE),
     # CPL instructions
-    tt.CPL,
+    (tt.CPL,),
     # DAA instructions
-    tt.DAA,
+    (tt.DAA,),
     # DEC instructions
     (tt.DEC, tt.REGISTER_A),
     (tt.DEC, tt.REGISTER_B),
@@ -74,11 +74,11 @@ parser_rules = [
     (tt.DEC, tt.REGISTER_HL),
     (tt.DEC, tt.REGISTER_SP),
     # DI instructions
-    tt.DI,
+    (tt.DI,),
     # EI instructions
-    tt.EI,
+    (tt.EI,),
     # HALT instructions
-    tt.HALT,
+    (tt.HALT,),
     # INC instructions
     (tt.INC, tt.REGISTER_A),
     (tt.INC, tt.REGISTER_B),
@@ -193,7 +193,7 @@ parser_rules = [
     (tt.LDI, tt.REGISTER_A, tt.REGISTER_HL),
     (tt.LDI, tt.REGISTER_HL, tt.REGISTER_A),
     # NOP instructions
-    tt.NOP,
+    (tt.NOP,),
     # OR instructions
     (tt.OR, tt.REGISTER_A),
     (tt.OR, tt.REGISTER_B),
@@ -228,9 +228,9 @@ parser_rules = [
     (tt.RET, tt.CONDITION_Z),
     (tt.RET, tt.CONDITION_NC),
     (tt.RET, tt.CONDITION_C),
-    tt.RET,
+    (tt.RET,),
     # RETI instructions
-    tt.RETI,
+    (tt.RETI,),
     # RL instructions
     (tt.RL, tt.REGISTER_A),
     (tt.RL, tt.REGISTER_B),
@@ -241,7 +241,7 @@ parser_rules = [
     (tt.RL, tt.REGISTER_L),
     (tt.RL, tt.REGISTER_HL),
     # RLA instructions
-    tt.RLA,
+    (tt.RLA,),
     # RLC instructions
     (tt.RLC, tt.REGISTER_A),
     (tt.RLC, tt.REGISTER_B),
@@ -252,7 +252,7 @@ parser_rules = [
     (tt.RLC, tt.REGISTER_L),
     (tt.RLC, tt.REGISTER_HL),
     # RLCA instructions
-    tt.RLCA,
+    (tt.RLCA,),
     # RR instructions
     (tt.RR, tt.REGISTER_A),
     (tt.RR, tt.REGISTER_B),
@@ -263,7 +263,7 @@ parser_rules = [
     (tt.RR, tt.REGISTER_L),
     (tt.RR, tt.REGISTER_HL),
     # RRA instructions
-    tt.RRA,
+    (tt.RRA,),
     # RRC instructions
     (tt.RRC, tt.REGISTER_A),
     (tt.RRC, tt.REGISTER_B),
@@ -274,7 +274,7 @@ parser_rules = [
     (tt.RRC, tt.REGISTER_L),
     (tt.RRC, tt.REGISTER_HL),
     # RRCA instructions
-    tt.RRCA,
+    (tt.RRCA,),
     # RST instructions
     (tt.RST, tt.HEXADECIMAL),
     # SBC instructions
@@ -288,7 +288,7 @@ parser_rules = [
     (tt.SBC, tt.REGISTER_A, tt.REGISTER_HL),
     (tt.SBC, tt.REGISTER_A, tt.VALUE),
     # SCF instructions
-    tt.SCF,
+    (tt.SCF,),
     # SET instructions
     (tt.SET, tt.BIT_VALUE, tt.REGISTER_A),
     (tt.SET, tt.BIT_VALUE, tt.REGISTER_B),
@@ -326,7 +326,7 @@ parser_rules = [
     (tt.SRL, tt.REGISTER_L),
     (tt.SRL, tt.REGISTER_HL),
     # STOP instructions
-    tt.STOP,
+    (tt.STOP,),
     # SUB instructions
     (tt.SUB, tt.REGISTER_A),
     (tt.SUB, tt.REGISTER_B),
@@ -355,5 +355,7 @@ parser_rules = [
     (tt.XOR, tt.REGISTER_H),
     (tt.XOR, tt.REGISTER_L),
     (tt.XOR, tt.REGISTER_HL),
-    (tt.XOR, tt.VALUE)
+    (tt.XOR, tt.VALUE),
+    # Label rule
+    (tt.LABEL,)
 ]
