@@ -1,7 +1,7 @@
 from typing import List
 from helpers.enums import TokenType
 import re
-from helpers import regex
+from helpers.rules import regex_rules
 
 
 class Token(object):
@@ -41,6 +41,6 @@ def lexer(code: List[str], line_num: int = 0) -> List[Token]:
         return []
     else:
         head, *tail = code
-        result = map(lambda x: tokenizer(x, regex.regex_rules, line_num), head.split())
+        result = map(lambda x: tokenizer(x, regex_rules, line_num), head.split())
         line_num += 1
         return list(result) + lexer(tail, line_num)
