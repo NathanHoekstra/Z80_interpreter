@@ -73,9 +73,9 @@ regex_rules = [
     (r'c|C', tt.CONDITION_C),
     # Values
     (r'[0-7]{1}', tt.BIT_VALUE),
-    (r'#.*', tt.DECIMAL),
-    (r'\d', tt.DECIMAL),
-    (r'\$.*', tt.HEXADECIMAL),
+    (r'#.*', tt.VALUE, tt.DECIMAL),
+    (r'\d', tt.VALUE, tt.DECIMAL),
+    (r'\$.*', tt.VALUE, tt.HEXADECIMAL),
     (r'%.*', tt.BINARY)
 ]
 

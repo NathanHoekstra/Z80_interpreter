@@ -5,13 +5,14 @@ from helpers.rules import regex_rules
 
 
 class Token(object):
-    def __init__(self, token_type: TokenType, value: str, line: int):
+    def __init__(self, token_type: TokenType, value: str, line: int, sub_type: TokenType = None):
         self.token_type = token_type
+        self.sub_type = sub_type
         self.value = value
         self.line = line
 
     def __str__(self):
-        return f"Token(Type:{self.token_type}, Value:'{self.value}', Line:{self.line})"
+        return f"Token(Type:{self.token_type}, Sub-type:{self.sub_type} Value:'{self.value}', Line:{self.line})"
 
     def __repr__(self):
         return self.__str__()
@@ -24,7 +25,7 @@ def tokenizer(item: str, rules: List, line_number: int) -> Token:
         return Token(TokenType.UNKNOWN, item, line_number)
     else:
         head, *tail = rules
-        rule, token_type = head
+        rule, *token_type = head
         match = re.match(rule, item)
 
         # No match has been found, let's try the next rule
@@ -32,7 +33,10 @@ def tokenizer(item: str, rules: List, line_number: int) -> Token:
             return tokenizer(item, tail, line_number)
 
         # A match has been found so let's return the token
-        return Token(token_type, item, line_number)
+        if len(token_type) == 1:  # Token type has no subtype
+            return Token(token_type[0], item, line_number)
+        else:  # This token has a sub-type so let's set it
+            return Token(token_type[0], item, line_number, token_type[1])
 
 
 # lexer :: List[str] -> int -> List[Token]
