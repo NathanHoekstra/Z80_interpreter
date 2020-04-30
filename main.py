@@ -1,6 +1,7 @@
 from helpers.utilities import Utilities
 import lexer
-from token_parser import parser
+import token_parser
+import run
 
 
 if __name__ == "__main__":
@@ -11,6 +12,8 @@ if __name__ == "__main__":
         print(token)
     print("\n----- Stage 2 (Parser) ----\n")
     # Parse the token list
-    parsed = parser(tokens)
+    parsed = token_parser.parser(tokens)
     for parsed_item in parsed:
         print(parsed_item)
+    print("\n----- Stage 3 (Execution) ----\n")
+    run.runner(parsed)
