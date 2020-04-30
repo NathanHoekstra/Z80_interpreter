@@ -40,4 +40,4 @@ def parser(token_list: List[Token], current_line: int = 1) -> List[List[Token]]:
         current_line += 1
         return [curr_tokens] + parser(token_list[len(curr_tokens):], current_line)
     else:
-        raise ValueError(f"Invalid syntax on line {current_line}: {' '.join(str(x.value) for x in curr_tokens)}")
+        raise SyntaxError(f"Invalid syntax on line {current_line}: {' '.join(str(x.value) for x in curr_tokens)}")
