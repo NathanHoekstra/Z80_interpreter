@@ -1,5 +1,5 @@
 from typing import List, Tuple, Union
-from lexer import Token
+from helpers.token import Token
 from helpers.rules import parser_rules
 from helpers.enums import TokenType
 from helpers.exceptions import ASMSyntaxError
