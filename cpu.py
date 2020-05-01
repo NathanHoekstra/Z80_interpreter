@@ -1,4 +1,5 @@
 import numpy as np
+from helpers.token import TokenType as tt
 
 
 class Cpu(object):
@@ -6,16 +7,25 @@ class Cpu(object):
         # Z80's memory size is 64KB
         self.memory = [np.uint8(0)] * 0xFFFF
         # Registers
-        self.a = np.uint8(0x00)
-        self.b = np.uint8(0x00)
-        self.sp = np.uint16(0xFFFE)
-        self.pc = np.uint16(0x00)
+        self.register = {
+            tt.REGISTER_A: np.uint8(0x00),
+            tt.REGISTER_B: np.uint8(0x00),
+            tt.REGISTER_C: np.uint8(0x00),
+            tt.REGISTER_D: np.uint8(0x00),
+            tt.REGISTER_E: np.uint8(0x00),
+            tt.REGISTER_F: np.uint8(0x00),
+            tt.REGISTER_H: np.uint8(0x00),
+            tt.REGISTER_L: np.uint8(0x00),
+            tt.REGISTER_AF: np.uint16(0x00),
+            tt.REGISTER_BC: np.uint16(0x00),
+            tt.REGISTER_DE: np.uint16(0x00),
+            tt.REGISTER_HL: np.uint16(0x00),
+            tt.REGISTER_SP: np.uint16(0xFFFE),
+            tt.REGISTER_PC: np.uint16(0x00)
+        }
 
     def __str__(self):
-        return f"Register A:        [{hex(self.a)}]\n" + \
-               f"Register B:        [{hex(self.b)}]\n" + \
-               f"Stack Pointer:     [{hex(self.sp)}]\n" + \
-               f"Program Counter:   [{hex(self.pc)}]\n"
+        return '\n'.join(str(k.name) + "\t" + hex(v) for k, v in self.register.items())
 
     def __repr__(self):
         return self.__str__()
