@@ -23,9 +23,18 @@ class Cpu(object):
             tt.REGISTER_SP: np.uint16(0xFFFE),
             tt.REGISTER_PC: np.uint16(0x00)
         }
+        self.flags = {
+            "Z": False,
+            "N": False,
+            "H": False,
+            "C": False
+        }
 
     def __str__(self):
-        return '\n'.join(str(k.name) + "\t" + hex(v) for k, v in self.register.items())
+        return '----- Registers -----\n' +\
+               '\n'.join(str(k.name) + "\t" + hex(v) for k, v in self.register.items()) +\
+               '\n----- Flags -----\n' +\
+               '\n'.join(str(k) + "\t" + str(v) for k, v in self.flags.items())
 
     def __repr__(self):
         return self.__str__()
