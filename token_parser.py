@@ -16,7 +16,7 @@ def validate_tokens(tokens: Tuple[TokenType], rules: List[Tuple]) -> bool:
     return validate_tokens(tokens, tail)
 
 
-# get_tokens :: List[Token] -> int -> List[Token] -> Union[List[Token], [List[TokenType]]
+# get_tokens :: List[Token] -> int -> List[Token] -> Union[List[Token], List[TokenType]]
 def get_tokens(tokens: List[Token], curr_line: int, just_type: bool = False) -> Union[List[Token], List[TokenType]]:
     # No more tokens to go through, let's exit out of the recursion
     if len(tokens) == 0:
