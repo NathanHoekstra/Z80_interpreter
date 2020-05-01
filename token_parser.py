@@ -40,5 +40,8 @@ def parser(token_list: List[Token], current_line: int = 1) -> List[List[Token]]:
     if validate_tokens(tuple(curr_types), parser_rules):
         current_line += 1
         return [curr_tokens] + parser(token_list[len(curr_tokens):], current_line)
+    # Line is invalid
     else:
-        raise ASMSyntaxError(f"Invalid syntax on line {current_line}: {' '.join(str(x.value) for x in curr_tokens)}")
+        invalid_line = [Token(TokenType.INVALID, ' '.join(str(x.value) for x in curr_tokens), current_line)]
+        current_line += 1
+        return [invalid_line] + parser(token_list[len(curr_tokens):], current_line)

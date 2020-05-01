@@ -85,3 +85,4 @@ class TokenType(Enum):
 
     # --- Unknown ---
     UNKNOWN = 100
+    INVALID = 101
