@@ -2,6 +2,7 @@ from helpers.utilities import Utilities
 import lexer
 import token_parser
 import run
+from cpu import Cpu
 
 
 if __name__ == "__main__":
@@ -16,4 +17,5 @@ if __name__ == "__main__":
     for parsed_item in parsed:
         print(parsed_item)
     print("\n----- Stage 3 (Execution) ----\n")
-    run.runner(parsed)
+    z80 = Cpu()
+    run.runner(z80, parsed)
