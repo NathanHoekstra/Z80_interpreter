@@ -9,7 +9,7 @@ class Cpu(object):
         self.a = np.uint8(0x00)
         self.b = np.uint8(0x00)
         self.sp = np.uint16(0xFFFE)
-        self.pc = np.uint16(0x1000)
+        self.pc = np.uint16(0x00)
 
     def __str__(self):
         return f"Register A:        [{hex(self.a)}]\n" + \
@@ -19,3 +19,8 @@ class Cpu(object):
 
     def __repr__(self):
         return self.__str__()
+
+
+if __name__ == "__main__":
+    cpu = Cpu()
+    print(cpu)
