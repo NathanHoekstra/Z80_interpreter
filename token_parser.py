@@ -2,7 +2,6 @@ from typing import List, Tuple, Union
 from helpers.token import Token
 from helpers.rules import parser_rules
 from helpers.enums import TokenType
-from helpers.exceptions import ASMSyntaxError
 
 
 # validate_tokens :: Tuple[TokenType] -> List[Tuple] -> Bool
