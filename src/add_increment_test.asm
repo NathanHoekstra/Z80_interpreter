@@ -9,4 +9,4 @@ loop:
     inc b       ;increment register b by 1
     dec a       ;decrement a by one
     jp nz, loop ;jump to loop if a is not zero
-ret ;exit program
+ret ;exit program, b should be 44
