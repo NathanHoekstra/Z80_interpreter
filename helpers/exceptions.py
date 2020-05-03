@@ -16,3 +16,7 @@ class NoTraceBackWithLineNumber(Exception):
 
 class ASMSyntaxError(NoTraceBackWithLineNumber):
     pass
+
+
+class LabelNotFound(NoTraceBackWithLineNumber):
+    pass
