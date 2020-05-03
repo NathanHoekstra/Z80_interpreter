@@ -9,7 +9,14 @@ def ADC(cpu: Cpu, token1: Token, token2: Token):
 
 
 def ADD(cpu: Cpu, token1: Token, token2: Token):
-    raise NotImplementedError()
+    # TODO: Set flags
+    # If token 2 is of type value
+    if token2.token_type == tt.VALUE:
+        # Add the value of token 2 to the register specified inside token 1
+        cpu.register[token1.token_type] += Utilities.get_value(token2)
+    # otherwise it must be another register
+    else:
+        cpu.register[token1.token_type] += cpu.register[token2.token_type]
 
 
 def AND(cpu: Cpu, token1: Token):
@@ -41,7 +48,14 @@ def DAA(cpu: Cpu):
 
 
 def DEC(cpu: Cpu, token1: Token):
-    raise NotImplementedError()
+    # Check if the register isn't already at 0
+    if not cpu.register[token1.token_type] == 0:
+        cpu.register[token1.token_type] -= 1
+        # Set the subtract flag since a subtraction was performed
+        cpu.flags["N"] = True
+    # Set the zero flag to true since the register value is now zero
+    if cpu.register[token1.token_type] == 0:
+        cpu.flags["Z"] = True
 
 
 def DI(cpu: Cpu):
@@ -57,7 +71,8 @@ def HALT(cpu: Cpu):
 
 
 def INC(cpu: Cpu, token1: Token):
-    raise NotImplementedError()
+    # TODO: Set flags
+    cpu.register[token1.token_type] += 1
 
 
 def JP(cpu: Cpu, token1: Token, token2: Token = None):
@@ -92,7 +107,8 @@ def LDI(cpu: Cpu, token1: Token, token2: Token):
 
 
 def NOP(cpu: Cpu):
-    raise NotImplementedError()
+    # Do nothing
+    return
 
 
 def OR(cpu: Cpu, token1: Token):
