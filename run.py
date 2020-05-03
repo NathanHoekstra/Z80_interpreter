@@ -1,8 +1,9 @@
 from typing import List, Dict
 from helpers.token import Token
 from helpers.enums import TokenType
-from cpu import Cpu
 from helpers.opcodes import cpu_opcodes
+from helpers.exceptions import ASMSyntaxError
+from cpu import Cpu
 
 
 # search_labels :: List[List[Token]] -> Dict -> Dict
@@ -32,6 +33,9 @@ def runner(cpu: Cpu, parsed_tokens: List[List[Token]]) -> None:
         cpu.labels = search_labels(parsed_tokens)
     # Unpack current line
     opcode, *params = parsed_tokens[cpu.register[TokenType.REGISTER_PC]]
+    # Check if the to be executed line isn't an invalid line
+    if opcode.token_type == TokenType.INVALID:
+        raise ASMSyntaxError(f"Invalid syntax: {opcode.value}")
     # Execute current line
     pc_value = cpu_opcodes[opcode.token_type](cpu, *params)
     # If the pc_value is not none, set the PC register to that value (happens with JP instruction)
