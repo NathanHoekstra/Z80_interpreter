@@ -1,5 +1,6 @@
 from helpers.token import TokenType as tt
 from helpers.token import Token
+from helpers.utilities import Utilities
 from cpu import Cpu
 
 
@@ -68,7 +69,14 @@ def JR(cpu: Cpu, token1: Token, token2: Token = None):
 
 
 def LD(cpu: Cpu, token1: Token, token2: Token):
-    raise NotImplementedError()
+    # Check if the second parameter input is of type value
+    if token2.token_type == tt.VALUE:
+        # Set the register specified in token 1 to the value of token 2
+        cpu.register[token1.token_type] = Utilities.get_value(token2)
+    # Otherwise the second parameter must be a register
+    else:
+        # Set the value of the register specified in token 1 to be the value of the register specified in token 2
+        cpu.register[token1.token_type] = cpu.register[token2.token_type]
 
 
 def LDD(cpu: Cpu, token1: Token, token2: Token):
