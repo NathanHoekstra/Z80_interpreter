@@ -33,7 +33,7 @@ class Cpu(object):
 
     def __str__(self):
         return '----- Registers -----\n' +\
-               '\n'.join(str(k.name) + "\t" + hex(v) for k, v in self.register.items()) +\
+               '\n'.join(str(k.name) + "\t" + str(v) for k, v in self.register.items()) +\
                '\n----- Flags -----\n' +\
                '\n'.join(str(k) + "\t" + str(v) for k, v in self.flags.items())
 
