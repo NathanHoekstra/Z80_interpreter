@@ -19,3 +19,4 @@ if __name__ == "__main__":
     print("\n----- Stage 3 (Execution) ----\n")
     z80 = Cpu()
     run.runner(z80, parsed)
+    print(z80)
