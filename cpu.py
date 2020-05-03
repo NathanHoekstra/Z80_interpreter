@@ -4,6 +4,7 @@ from helpers.token import TokenType as tt
 
 class Cpu(object):
     def __init__(self):
+        self.labels = None
         # Z80's memory size is 64KB
         self.memory = [np.uint8(0)] * 0xFFFF
         # Registers
