@@ -1,24 +1,25 @@
 from helpers.token import TokenType as tt
+from helpers.token import Token
 from cpu import Cpu
 
 
-def ADC(cpu: Cpu, token1: tt, token2: tt):
+def ADC(cpu: Cpu, token1: Token, token2: Token):
     raise NotImplementedError()
 
 
-def ADD(cpu: Cpu, token1: tt, token2: tt):
+def ADD(cpu: Cpu, token1: Token, token2: Token):
     raise NotImplementedError()
 
 
-def AND(cpu: Cpu, token1: tt):
+def AND(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
-def BIT(cpu: Cpu, token1: tt, token2: tt):
+def BIT(cpu: Cpu, token1: Token, token2: Token):
     raise NotImplementedError()
 
 
-def CALL(cpu: Cpu, token1: tt, token2: tt = None):
+def CALL(cpu: Cpu, token1: Token, token2: Token = None):
     raise NotImplementedError()
 
 
@@ -26,7 +27,7 @@ def CCF(cpu: Cpu):
     raise NotImplementedError()
 
 
-def CP(cpu: Cpu, token1: tt):
+def CP(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
@@ -38,7 +39,7 @@ def DAA(cpu: Cpu):
     raise NotImplementedError()
 
 
-def DEC(cpu: Cpu, token1: tt):
+def DEC(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
@@ -54,31 +55,31 @@ def HALT(cpu: Cpu):
     raise NotImplementedError()
 
 
-def INC(cpu: Cpu, token1: tt):
+def INC(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
-def JP(cpu: Cpu, token1: tt, token2: tt = None):
+def JP(cpu: Cpu, token1: Token, token2: Token = None):
     raise NotImplementedError()
 
 
-def JR(cpu: Cpu, token1: tt, token2: tt = None):
+def JR(cpu: Cpu, token1: Token, token2: Token = None):
     raise NotImplementedError()
 
 
-def LD(cpu: Cpu, token1: tt, token2: tt):
+def LD(cpu: Cpu, token1: Token, token2: Token):
     raise NotImplementedError()
 
 
-def LDD(cpu: Cpu, token1: tt, token2: tt):
+def LDD(cpu: Cpu, token1: Token, token2: Token):
     raise NotImplementedError()
 
 
-def LDH(cpu: Cpu, token1: tt, token2: tt):
+def LDH(cpu: Cpu, token1: Token, token2: Token):
     raise NotImplementedError()
 
 
-def LDI(cpu: Cpu, token1: tt, token2: tt):
+def LDI(cpu: Cpu, token1: Token, token2: Token):
     raise NotImplementedError()
 
 
@@ -86,23 +87,23 @@ def NOP(cpu: Cpu):
     raise NotImplementedError()
 
 
-def OR(cpu: Cpu, token1: tt):
+def OR(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
-def POP(cpu: Cpu, token1: tt):
+def POP(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
-def PUSH(cpu: Cpu, token1: tt):
+def PUSH(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
-def RES(cpu: Cpu, token1: tt, token2: tt):
+def RES(cpu: Cpu, token1: Token, token2: Token):
     raise NotImplementedError()
 
 
-def RET(cpu: Cpu, token1: tt = None):
+def RET(cpu: Cpu, token1: Token = None):
     raise NotImplementedError()
 
 
@@ -110,7 +111,7 @@ def RETI(cpu: Cpu):
     raise NotImplementedError()
 
 
-def RL(cpu: Cpu, token1: tt):
+def RL(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
@@ -118,7 +119,7 @@ def RLA(cpu: Cpu):
     raise NotImplementedError()
 
 
-def RLC(cpu: Cpu, token1: tt):
+def RLC(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
@@ -126,7 +127,7 @@ def RLCA(cpu: Cpu):
     raise NotImplementedError()
 
 
-def RR(cpu: Cpu, token1: tt):
+def RR(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
@@ -134,7 +135,7 @@ def RRA(cpu: Cpu):
     raise NotImplementedError()
 
 
-def RRC(cpu: Cpu, token1: tt):
+def RRC(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
@@ -142,11 +143,11 @@ def RRCA(cpu: Cpu):
     raise NotImplementedError()
 
 
-def RST(cpu: Cpu, token1: tt):
+def RST(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
-def SBC(cpu: Cpu, token1: tt, token2: tt):
+def SBC(cpu: Cpu, token1: Token, token2: Token):
     raise NotImplementedError()
 
 
@@ -154,19 +155,19 @@ def SCF(cpu: Cpu):
     raise NotImplementedError()
 
 
-def SET(cpu: Cpu, token1: tt, token2: tt):
+def SET(cpu: Cpu, token1: Token, token2: Token):
     raise NotImplementedError()
 
 
-def SLA(cpu: Cpu, token1: tt):
+def SLA(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
-def SRA(cpu: Cpu, token1: tt):
+def SRA(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
-def SRL(cpu: Cpu, token1: tt):
+def SRL(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
@@ -174,15 +175,15 @@ def STOP(cpu: Cpu):
     raise NotImplementedError()
 
 
-def SUB(cpu: Cpu, token1: tt):
+def SUB(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
-def SWAP(cpu: Cpu, token1: tt):
+def SWAP(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
-def XOR(cpu: Cpu, token1: tt):
+def XOR(cpu: Cpu, token1: Token):
     raise NotImplementedError()
 
 
