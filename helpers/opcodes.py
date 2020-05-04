@@ -230,6 +230,9 @@ def RES(cpu: Cpu, token1: Token, token2: Token) -> None:
 
 # RET :: Cpu -> Token -> Union[None, uint8]
 def RET(cpu: Cpu, token1: Token = None) -> Union[None, np.uint8]:
+    # Check if the stack pointer isn't already at it's 'origin'
+    if cpu.register[tt.REGISTER_SP] == 0xFFFE:
+        return None
     # Check if the token is None or if an condition is met
     if token1 is None or check_condition(cpu, token1):
         # Get the return address from the stack and point the SP one higher
