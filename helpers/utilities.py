@@ -16,9 +16,13 @@ class Utilities:
         asm_file = open(file=file, mode="r")
         for line in asm_file.readlines():
             line = line.split(';')[0]  # don't parse the comments
+            # strip newlines
+            line = line.strip('\n')
             # check if the line is not empty
             if line:
                 splitted = line.split('    ')
+                if all('' == s for s in splitted):
+                    continue
                 if not splitted[0]:
                     lines.append(splitted[1])
                 else:
