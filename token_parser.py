@@ -35,8 +35,12 @@ def parser(token_list: List[Token], current_line: int = 1) -> List[List[Token]]:
     # We went through the token list
     if len(token_list) == 0:
         return []
+    # Get just the current types from the token list, so we can check for validity
     curr_types = get_tokens(token_list, current_line, True)
+    # Also extract the current tokens as a whole so we can append it later (if validity checks out)
     curr_tokens = get_tokens(token_list, current_line)
+
+    # Validate the tokens
     if validate_tokens(tuple(curr_types), parser_rules):
         current_line += 1
         return [curr_tokens] + parser(token_list[len(curr_tokens):], current_line)
@@ -44,8 +48,10 @@ def parser(token_list: List[Token], current_line: int = 1) -> List[List[Token]]:
     else:
         # Use higher order function to extract the line values (#2)
         line_values = list(map(lambda x: x.value, curr_tokens))
+
         # Use higher order function to combine those line values with a space in between (#3)
         line_contents = functools.reduce(lambda a, b: a + " " + b, line_values)
+
         invalid_line = [Token(TokenType.INVALID, line_contents, current_line)]
         current_line += 1
         return [invalid_line] + parser(token_list[len(curr_tokens):], current_line)
