@@ -24,24 +24,3 @@ class Utilities:
                 else:
                     lines.append(splitted[0])
         return lines
-
-    @staticmethod
-    def get_value(token: Token) -> np.uint8:
-        if not token.token_type == TokenType.VALUE:
-            raise ValueError(f"Wrong token type input specified, "
-                             f"expected {TokenType.VALUE.name} received {token.token_type.name}")
-        # Check what the subtype is
-        if token.sub_type == TokenType.HEXADECIMAL:
-            # let's strip the $ from the value and return it
-            value = token.value.strip("$")
-            return np.uint8(int(value, 16))
-        elif token.sub_type == TokenType.DECIMAL:
-            # let's strip the # from the value and return it
-            return np.uint8(token.value.strip("#"))
-        elif token.sub_type == TokenType.BINARY:
-            # let's strip the % from the value
-            value = token.value.strip("%")
-            return np.uint8(int(value, 2))
-        # The token value has an unknown subtype
-        else:
-            raise ValueError(f"The token {TokenType.VALUE.name} has an unknown subtype: {token.sub_type.name}")

@@ -4,8 +4,29 @@ from helpers.decorators import count
 from helpers.token import TokenType as tt
 from helpers.token import Token
 from helpers.exceptions import LabelNotFound
-from helpers.utilities import Utilities
 from cpu import Cpu
+
+
+# get_value :: Token -> uint8
+def get_value(token: Token) -> np.uint8:
+    if not token.token_type == tt.VALUE:
+        raise ValueError(f"Wrong token type input specified, "
+                         f"expected {tt.VALUE.name} received {token.token_type.name}")
+    # Check what the subtype is
+    if token.sub_type == tt.HEXADECIMAL:
+        # let's strip the $ from the value and return it
+        value = token.value.strip("$")
+        return np.uint8(int(value, 16))
+    elif token.sub_type == tt.DECIMAL:
+        # let's strip the # from the value and return it
+        return np.uint8(token.value.strip("#"))
+    elif token.sub_type == tt.BINARY:
+        # let's strip the % from the value
+        value = token.value.strip("%")
+        return np.uint8(int(value, 2))
+    # The token value has an unknown subtype
+    else:
+        raise ValueError(f"The token {tt.VALUE.name} has an unknown subtype: {token.sub_type.name}")
 
 
 # ADC :: Cpu -> Token -> Token -> None
@@ -19,7 +40,7 @@ def ADD(cpu: Cpu, token1: Token, token2: Token) -> None:
     # If token 2 is of type value
     if token2.token_type == tt.VALUE:
         # Add the value of token 2 to the register specified inside token 1
-        cpu.register[token1.token_type] += Utilities.get_value(token2)
+        cpu.register[token1.token_type] += get_value(token2)
     # otherwise it must be another register
     else:
         cpu.register[token1.token_type] += cpu.register[token2.token_type]
@@ -129,7 +150,7 @@ def LD(cpu: Cpu, token1: Token, token2: Token) -> None:
     # Check if the second parameter input is of type value
     if token2.token_type == tt.VALUE:
         # Set the register specified in token 1 to the value of token 2
-        cpu.register[token1.token_type] = Utilities.get_value(token2)
+        cpu.register[token1.token_type] = get_value(token2)
     # Otherwise the second parameter must be a register
     else:
         # Set the value of the register specified in token 1 to be the value of the register specified in token 2
