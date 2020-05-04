@@ -43,7 +43,7 @@ def runner(cpu: Cpu, parsed_tokens: List[List[Token]]) -> None:
 
     # Check if the to be executed line isn't an invalid line
     if opcode.token_type == TokenType.INVALID:
-        raise ASMSyntaxError(f"Invalid syntax: {opcode.value}")
+        raise ASMSyntaxError(opcode.line, f"Invalid syntax: {opcode.value}")
 
     # Execute current line
     pc_value = cpu_opcodes[opcode.token_type](cpu, *params)

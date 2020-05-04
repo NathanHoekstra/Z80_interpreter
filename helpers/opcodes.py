@@ -87,7 +87,7 @@ def JP(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]:
         if token1.value in cpu.labels:
             return cpu.labels[token1.value] - 1  # Remove one since it is a line number not an index
         else:
-            raise LabelNotFound(f"The label {token1.value} was not found")
+            raise LabelNotFound(token1.line, f"The label {token1.value} was not found")
     # token 1 is not a label, so it must be a conditional jump
     else:
         if token1.token_type == tt.CONDITION_NZ and not cpu.flags["Z"] or \
@@ -98,7 +98,7 @@ def JP(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]:
             if token2.value in cpu.labels:
                 return cpu.labels[token2.value] - 1  # Remove one since it is a line number not an index
             else:
-                raise LabelNotFound(f"The label {token2.value} was not found")
+                raise LabelNotFound(token2.line, f"The label '{token2.value}' was not found")
     return None
 
 
