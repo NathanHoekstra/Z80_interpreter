@@ -32,6 +32,7 @@ def lexer(code: List[str], line_num: int = 0) -> List[Token]:
         return []
     else:
         head, *tail = code
+        # Use higher order function to tokenize each line (#1)
         result = map(lambda x: tokenizer(x, regex_rules, line_num), head.split())
         line_num += 1
         return list(result) + lexer(tail, line_num)

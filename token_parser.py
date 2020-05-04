@@ -1,3 +1,4 @@
+import functools
 from typing import List, Tuple, Union
 from helpers.token import Token
 from helpers.rules import parser_rules
@@ -41,6 +42,10 @@ def parser(token_list: List[Token], current_line: int = 1) -> List[List[Token]]:
         return [curr_tokens] + parser(token_list[len(curr_tokens):], current_line)
     # Line is invalid
     else:
-        invalid_line = [Token(TokenType.INVALID, ' '.join(str(x.value) for x in curr_tokens), current_line)]
+        # Use higher order function to extract the line values (#2)
+        line_values = list(map(lambda x: x.value, curr_tokens))
+        # Use higher order function to combine those line values with a space in between (#3)
+        line_contents = functools.reduce(lambda a, b: a + " " + b, line_values)
+        invalid_line = [Token(TokenType.INVALID, line_contents, current_line)]
         current_line += 1
         return [invalid_line] + parser(token_list[len(curr_tokens):], current_line)
