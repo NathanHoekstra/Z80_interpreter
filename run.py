@@ -31,7 +31,7 @@ def search_labels(parsed_tokens: List[List[Token]], result: Dict = None) -> Dict
 # runner :: Cpu -> List[List[Token]] -> None
 def runner(cpu: Cpu, parsed_tokens: List[List[Token]]) -> None:
     # Is the program finished?
-    if cpu.register[TokenType.REGISTER_PC] >= len(parsed_tokens) - 1:
+    if cpu.register[TokenType.REGISTER_PC] >= len(parsed_tokens):
         print(f"[info] The program has jumped {JP.counter} times\n")
         return
 
