@@ -35,7 +35,9 @@ class Cpu(object):
         return '----- Registers -----\n' +\
                '\n'.join(str(k.name) + "\t" + str(v) for k, v in self.register.items()) +\
                '\n----- Flags -----\n' +\
-               '\n'.join(str(k) + "\t" + str(v) for k, v in self.flags.items())
+               '\n'.join(str(k) + "\t" + str(v) for k, v in self.flags.items()) +\
+               '\n----- Labels -----\n' +\
+               '\n'.join(str(k) + " : " + str(v) for k, v in self.labels.items())
 
     def __repr__(self):
         return self.__str__()
