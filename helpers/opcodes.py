@@ -8,10 +8,12 @@ from helpers.utilities import Utilities
 from cpu import Cpu
 
 
+# ADC :: Cpu -> Token -> Token -> None
 def ADC(cpu: Cpu, token1: Token, token2: Token) -> None:
     raise NotImplementedError()
 
 
+# ADD :: Cpu -> Token -> Token -> None
 def ADD(cpu: Cpu, token1: Token, token2: Token) -> None:
     # TODO: Set flags
     # If token 2 is of type value
@@ -23,34 +25,42 @@ def ADD(cpu: Cpu, token1: Token, token2: Token) -> None:
         cpu.register[token1.token_type] += cpu.register[token2.token_type]
 
 
+# AND :: Cpu -> Token -> None
 def AND(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# BIT :: Cpu -> Token -> Token -> None
 def BIT(cpu: Cpu, token1: Token, token2: Token) -> None:
     raise NotImplementedError()
 
 
+# CALL :: Cpu -> Token -> Token -> None
 def CALL(cpu: Cpu, token1: Token, token2: Token = None) -> None:
     raise NotImplementedError()
 
 
+# CCF :: Cpu -> None
 def CCF(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# CP :: Cpu -> Token -> None
 def CP(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# CPL :: Cpu -> None
 def CPL(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# DAA :: Cpu -> None
 def DAA(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# DEC :: Cpu -> Token -> None
 def DEC(cpu: Cpu, token1: Token) -> None:
     # Check if the register isn't already at 0
     if not cpu.register[token1.token_type] == 0:
@@ -62,18 +72,22 @@ def DEC(cpu: Cpu, token1: Token) -> None:
         cpu.flags["Z"] = True
 
 
+# DI :: Cpu -> None
 def DI(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# EI :: Cpu -> None
 def EI(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# HALT :: Cpu -> None
 def HALT(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# INC :: Cpu -> Token -> None
 def INC(cpu: Cpu, token1: Token) -> None:
     # TODO: Set flags
     cpu.register[token1.token_type] += 1
@@ -81,6 +95,7 @@ def INC(cpu: Cpu, token1: Token) -> None:
     cpu.flags["N"] = False
 
 
+# JP :: Cpu -> Token -> Token -> Union[None, uint8]
 @count
 def JP(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]:
     # If the token 1 is of type label, jump straight away
@@ -104,10 +119,12 @@ def JP(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]:
     return None
 
 
+# JR :: Cpu -> Token -> Token -> None
 def JR(cpu: Cpu, token1: Token, token2: Token = None) -> None:
     raise NotImplementedError()
 
 
+# LD :: Cpu -> Token -> Token -> None
 def LD(cpu: Cpu, token1: Token, token2: Token) -> None:
     # Check if the second parameter input is of type value
     if token2.token_type == tt.VALUE:
@@ -119,120 +136,149 @@ def LD(cpu: Cpu, token1: Token, token2: Token) -> None:
         cpu.register[token1.token_type] = cpu.register[token2.token_type]
 
 
+# LDD :: Cpu -> Token -> Token -> None
 def LDD(cpu: Cpu, token1: Token, token2: Token) -> None:
     raise NotImplementedError()
 
 
+# LDH :: Cpu -> Token -> Token -> None
 def LDH(cpu: Cpu, token1: Token, token2: Token) -> None:
     raise NotImplementedError()
 
 
+# LDI :: Cpu -> Token -> Token -> None
 def LDI(cpu: Cpu, token1: Token, token2: Token) -> None:
     raise NotImplementedError()
 
 
+# NOP :: Cpu -> None
 def NOP(cpu: Cpu) -> None:
     # Do nothing
     return
 
 
+# OR :: Cpu -> Token -> None
 def OR(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# POP :: Cpu -> Token -> None
 def POP(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# PUSH :: Cpu -> Token -> None
 def PUSH(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# RES :: Cpu -> Token -> Token -> None
 def RES(cpu: Cpu, token1: Token, token2: Token) -> None:
     raise NotImplementedError()
 
 
+# RET :: Cpu -> Token -> None
 def RET(cpu: Cpu, token1: Token = None) -> None:
     # Return (exit the program)
     return
 
 
+# RETI :: Cpu -> None
 def RETI(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# RL :: Cpu -> Token -> None
 def RL(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# RLA :: Cpu -> None
 def RLA(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# RLC :: Cpu -> Token -> None
 def RLC(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# RLCA :: Cpu -> None
 def RLCA(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# RR :: Cpu -> Token -> None
 def RR(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# RRA :: Cpu -> None
 def RRA(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# RRC :: Cpu -> Token -> None
 def RRC(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# RRCA :: Cpu -> None
 def RRCA(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# RST :: Cpu -> Token -> None
 def RST(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# SBC :: Cpu -> Token -> Token -> None
 def SBC(cpu: Cpu, token1: Token, token2: Token) -> None:
     raise NotImplementedError()
 
 
+# SCF :: Cpu -> None
 def SCF(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# SET :: Cpu -> Token -> Token -> None
 def SET(cpu: Cpu, token1: Token, token2: Token) -> None:
     raise NotImplementedError()
 
 
+# SLA :: Cpu -> Token -> None
 def SLA(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# SRA :: Cpu -> Token -> None
 def SRA(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# SRL :: Cpu -> Token -> None
 def SRL(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# STOP :: Cpu -> Token -> None
 def STOP(cpu: Cpu) -> None:
     raise NotImplementedError()
 
 
+# SUB :: Cpu -> Token -> None
 def SUB(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# SWAP :: Cpu -> Token -> None
 def SWAP(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
 
+# XOR :: Cpu -> Token -> None
 def XOR(cpu: Cpu, token1: Token) -> None:
     raise NotImplementedError()
 
