@@ -49,7 +49,7 @@ def runner(cpu: Cpu, parsed_tokens: List[List[Token]]) -> None:
     # Execute current line
     pc_value = cpu_opcodes[opcode.token_type](cpu, *params)
 
-    # If the pc_value is not none, set the PC register to that value (happens with JP instruction)
+    # If the pc_value is not none, set the PC register to that value (happens with jump-like instructions)
     if pc_value:
         cpu.register[TokenType.REGISTER_PC] = pc_value
     # Otherwise up the program counter by one
