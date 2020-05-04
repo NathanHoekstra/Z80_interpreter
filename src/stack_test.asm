@@ -11,4 +11,4 @@ subtract_b_by_12:
     ret
 
 end:
-    NOP ; register B should be 50, register A should be 70
+    ret ; register B should be 50, register A should be 70
