@@ -14,9 +14,11 @@ class NoTraceBackWithLineNumber(Exception):
         sys.exit(self)
 
 
+# Inherited assembly syntax error exception
 class ASMSyntaxError(NoTraceBackWithLineNumber):
     pass
 
 
+# Inherited label not found exception
 class LabelNotFound(NoTraceBackWithLineNumber):
     pass
