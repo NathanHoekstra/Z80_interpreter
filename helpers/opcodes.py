@@ -1,5 +1,6 @@
 import numpy as np
 from typing import Union
+from helpers.decorators import count
 from helpers.token import TokenType as tt
 from helpers.token import Token
 from helpers.exceptions import LabelNotFound
@@ -80,6 +81,7 @@ def INC(cpu: Cpu, token1: Token) -> None:
     cpu.flags["N"] = False
 
 
+@count
 def JP(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]:
     # If the token 1 is of type label, jump straight away
     if token1.token_type == tt.LABEL:

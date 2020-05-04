@@ -1,7 +1,7 @@
 from typing import List, Dict
 from helpers.token import Token
 from helpers.enums import TokenType
-from helpers.opcodes import cpu_opcodes
+from helpers.opcodes import cpu_opcodes, JP
 from helpers.exceptions import ASMSyntaxError
 from cpu import Cpu
 
@@ -32,6 +32,7 @@ def search_labels(parsed_tokens: List[List[Token]], result: Dict = None) -> Dict
 def runner(cpu: Cpu, parsed_tokens: List[List[Token]]) -> None:
     # Is the program finished?
     if cpu.register[TokenType.REGISTER_PC] >= len(parsed_tokens) - 1:
+        print(f"[info] The program has jumped {JP.counter} times\n")
         return
 
     # Are the labels found yet?
