@@ -28,6 +28,10 @@ def get_value(token: Token) -> np.uint8:
     else:
         raise ValueError(f"The token {tt.VALUE.name} has an unknown subtype: {token.sub_type.name}")
 
+#                                       #
+#   ---- Opcode implementations ----    #
+#                                       #
+
 
 # ADC :: Cpu -> Token -> Token -> None
 def ADC(cpu: Cpu, token1: Token, token2: Token) -> None:
