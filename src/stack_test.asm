@@ -1,6 +1,6 @@
 ld b, #62 ; Store 62 inside register B
 call subtract_b_by_12
-ld a, $FE
+add a, #20
 jp end
 
 subtract_b_by_12:
@@ -11,4 +11,4 @@ subtract_b_by_12:
     ret
 
 end:
-    NOP ; register B should be 50, register A should be 254
+    NOP ; register B should be 50, register A should be 70
