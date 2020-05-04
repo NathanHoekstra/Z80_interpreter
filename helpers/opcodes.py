@@ -28,6 +28,19 @@ def get_value(token: Token) -> np.uint8:
     else:
         raise ValueError(f"The token {tt.VALUE.name} has an unknown subtype: {token.sub_type.name}")
 
+
+# check_condition :: Cpu -> Token -> Bool
+def check_condition(cpu: Cpu, token: Token) -> bool:
+    if not token:  # Token can possibly be None
+        return False
+    elif token.token_type == tt.CONDITION_NZ and not cpu.flags["Z"] or \
+            token.token_type == tt.CONDITION_Z and cpu.flags["Z"] or \
+            token.token_type == tt.CONDITION_NC and not cpu.flags["C"] or \
+            token.token_type == tt.CONDITION_C and cpu.flags["C"]:
+        return True
+    else:
+        return False
+
 #                                       #
 #   ---- Opcode implementations ----    #
 #                                       #
@@ -48,6 +61,7 @@ def ADD(cpu: Cpu, token1: Token, token2: Token) -> None:
     # otherwise it must be another register
     else:
         cpu.register[token1.token_type] += cpu.register[token2.token_type]
+    return
 
 
 # AND :: Cpu -> Token -> None
@@ -61,8 +75,20 @@ def BIT(cpu: Cpu, token1: Token, token2: Token) -> None:
 
 
 # CALL :: Cpu -> Token -> Token -> None
-def CALL(cpu: Cpu, token1: Token, token2: Token = None) -> None:
-    raise NotImplementedError()
+def CALL(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]:
+    # Check if token 1 is of type label or a condition is met
+    if token1.token_type == tt.LABEL or check_condition(cpu, token1):
+        next_instruction = token1.line
+        # Lower the stack pointer
+        cpu.register[tt.REGISTER_SP] -= 1
+        # Push the address of the next instruction onto the stack
+        cpu.memory[cpu.register[tt.REGISTER_SP]] = next_instruction
+        # Jump to the address
+        if token1.token_type == tt.LABEL:
+            return JP(cpu, token1)
+        else:
+            return JP(cpu, token2)
+    return None
 
 
 # CCF :: Cpu -> None
@@ -95,6 +121,7 @@ def DEC(cpu: Cpu, token1: Token) -> None:
     # Set the zero flag to true since the register value is now zero
     if cpu.register[token1.token_type] == 0:
         cpu.flags["Z"] = True
+    return
 
 
 # DI :: Cpu -> None
@@ -114,10 +141,11 @@ def HALT(cpu: Cpu) -> None:
 
 # INC :: Cpu -> Token -> None
 def INC(cpu: Cpu, token1: Token) -> None:
-    # TODO: Set flags
+    # TODO: Set H flag
     cpu.register[token1.token_type] += 1
     # Reset the the subtract flag since a increment was performed
     cpu.flags["N"] = False
+    return
 
 
 # JP :: Cpu -> Token -> Token -> Union[None, uint8]
@@ -132,10 +160,7 @@ def JP(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]:
             raise ASMLabelError(token1.line, f"The label {token1.value} was not found")
     # token 1 is not a label, so it must be a conditional jump
     else:
-        if token1.token_type == tt.CONDITION_NZ and not cpu.flags["Z"] or \
-                token1.token_type == tt.CONDITION_Z and cpu.flags["Z"] or \
-                token1.token_type == tt.CONDITION_NC and not cpu.flags["C"] or \
-                token1.token_type == tt.CONDITION_C and cpu.flags["C"]:
+        if check_condition(cpu, token1):
             # Check if the label exists
             if token2.value in cpu.labels:
                 return cpu.labels[token2.value] - 1  # Remove one since it is a line number not an index
@@ -159,6 +184,7 @@ def LD(cpu: Cpu, token1: Token, token2: Token) -> None:
     else:
         # Set the value of the register specified in token 1 to be the value of the register specified in token 2
         cpu.register[token1.token_type] = cpu.register[token2.token_type]
+    return
 
 
 # LDD :: Cpu -> Token -> Token -> None
@@ -202,10 +228,15 @@ def RES(cpu: Cpu, token1: Token, token2: Token) -> None:
     raise NotImplementedError()
 
 
-# RET :: Cpu -> Token -> None
-def RET(cpu: Cpu, token1: Token = None) -> None:
-    # Return (exit the program)
-    return
+# RET :: Cpu -> Token -> Union[None, uint8]
+def RET(cpu: Cpu, token1: Token = None) -> Union[None, np.uint8]:
+    # Check if the token is None or if an condition is met
+    if token1 is None or check_condition(cpu, token1):
+        # Get the return address from the stack and point the SP one higher
+        address = cpu.memory[cpu.register[tt.REGISTER_SP]]
+        cpu.register[tt.REGISTER_SP] += 1
+        return address
+    return None
 
 
 # RETI :: Cpu -> None
@@ -295,7 +326,18 @@ def STOP(cpu: Cpu) -> None:
 
 # SUB :: Cpu -> Token -> None
 def SUB(cpu: Cpu, token1: Token) -> None:
-    raise NotImplementedError()
+    # check if the token is of type value
+    if token1.token_type == tt.VALUE:
+        cpu.register[tt.REGISTER_A] -= get_value(token1)
+    # Otherwise it must be an register
+    else:
+        cpu.register[tt.REGISTER_A] -= cpu.register[token1.token_type]
+    # Set flags
+    if cpu.register[tt.REGISTER_A] <= 0:
+        cpu.register[tt.REGISTER_A] = 0  # Make sure that the register isn't a negative value
+        cpu.flags["Z"] = True
+    cpu.flags["N"] = True
+    return
 
 
 # SWAP :: Cpu -> Token -> None
