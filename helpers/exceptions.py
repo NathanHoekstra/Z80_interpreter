@@ -13,6 +13,6 @@ class ASMSyntaxError(NoTraceBackWithLineNumber):
     pass
 
 
-# Inherited label not found exception
-class LabelNotFound(NoTraceBackWithLineNumber):
+# Inherited ASM label error exception
+class ASMLabelError(NoTraceBackWithLineNumber):
     pass
