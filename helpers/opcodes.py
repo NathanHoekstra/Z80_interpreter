@@ -80,7 +80,7 @@ def CALL(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]
     if token1.token_type == tt.LABEL or check_condition(cpu, token1):
         next_instruction = token1.line
         # Lower the stack pointer
-        cpu.register[tt.REGISTER_SP] -= 1
+        cpu.register[tt.REGISTER_SP] -= 2  # By two because a label is supposed to be 16 bit
         # Push the address of the next instruction onto the stack
         cpu.memory[cpu.register[tt.REGISTER_SP]] = next_instruction
         # Jump to the address
@@ -234,7 +234,7 @@ def RET(cpu: Cpu, token1: Token = None) -> Union[None, np.uint8]:
     if token1 is None or check_condition(cpu, token1):
         # Get the return address from the stack and point the SP one higher
         address = cpu.memory[cpu.register[tt.REGISTER_SP]]
-        cpu.register[tt.REGISTER_SP] += 1
+        cpu.register[tt.REGISTER_SP] += 2 # By two because a label is supposed to be 16 bit
         return address
     return None
 
