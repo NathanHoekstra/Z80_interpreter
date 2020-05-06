@@ -1,4 +1,5 @@
 import numpy as np
+import time
 from typing import Union
 from helpers.decorators import count
 from helpers.token import TokenType as tt
@@ -85,9 +86,10 @@ def CALL(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]
     if token1.token_type == tt.LABEL or check_condition(cpu, token1):
         next_instruction = token1.line
         # Lower the stack pointer
-        cpu.register[tt.REGISTER_SP] -= 2  # Decrement by two because a label is supposed to be 16 bit
+        cpu.register[tt.REGISTER_SP] -= 1  # Decrement by two because a label is supposed to be 16 bit
         # Push the address of the next instruction onto the stack
         cpu.memory[cpu.register[tt.REGISTER_SP]] = next_instruction
+        cpu.register[tt.REGISTER_SP] -= 1  # Decrement again because a label is supposed to be 16 bit
         # Jump to the address
         if token1.token_type == tt.LABEL:
             return JP(cpu, token1)
@@ -141,7 +143,9 @@ def EI(cpu: Cpu) -> None:
 
 # HALT :: Cpu -> None
 def HALT(cpu: Cpu) -> None:
-    raise NotImplementedError()
+    # TODO: Halt now does a sleep of 1 second, normally waits for an interrupt
+    time.sleep(1)
+    return
 
 
 # INC :: Cpu -> Token -> None
@@ -252,9 +256,10 @@ def RET(cpu: Cpu, token1: Token = None) -> Union[None, np.uint8]:
         return None
     # Check if the token is None or if an condition is met
     if token1 is None or check_condition(cpu, token1):
+        cpu.register[tt.REGISTER_SP] += 1
         # Get the return address from the stack and point the SP one higher
         address = cpu.memory[cpu.register[tt.REGISTER_SP]]
-        cpu.register[tt.REGISTER_SP] += 2  # Increment by two because a label is supposed to be 16 bit
+        cpu.register[tt.REGISTER_SP] += 1  # Increment again because a label is supposed to be 16 bit
         return address
     return None
 
