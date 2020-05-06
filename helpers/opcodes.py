@@ -184,7 +184,6 @@ def LD(cpu: Cpu, token1: Token, token2: Token) -> None:
     # Check if the second parameter input is of type value
     if token2.token_type == tt.VALUE:
         # Set the register specified in token 1 to the value of token 2
-        print(get_value(token2))
         cpu.register[token1.token_type] = get_value(token2)
     # Otherwise the second parameter must be a register
     else:
