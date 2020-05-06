@@ -178,11 +178,11 @@ parser_rules = [
     (tt.JP, tt.CONDITION_C, tt.LABEL),
     (tt.JP, tt.REGISTER_HL),
     # JR instructions
-    (tt.JR, tt.LABEL),
-    (tt.JR, tt.CONDITION_NZ, tt.LABEL),
-    (tt.JR, tt.CONDITION_Z, tt.LABEL),
-    (tt.JR, tt.CONDITION_NC, tt.LABEL),
-    (tt.JR, tt.CONDITION_C, tt.LABEL),
+    (tt.JR, tt.VALUE),
+    (tt.JR, tt.CONDITION_NZ, tt.VALUE),
+    (tt.JR, tt.CONDITION_Z, tt.VALUE),
+    (tt.JR, tt.CONDITION_NC, tt.VALUE),
+    (tt.JR, tt.CONDITION_C, tt.VALUE),
     # LD instructions
     (tt.LD, tt.REGISTER_A, tt.VALUE),
     (tt.LD, tt.REGISTER_B, tt.VALUE),
