@@ -8,18 +8,23 @@ from cpu import Cpu
 
 
 # get_value :: Token -> uint8
-def get_value(token: Token) -> np.uint8:
+def get_value(token: Token) -> Union[np.uint8, np.uint16]:
     if not token.token_type == tt.VALUE:
         raise ValueError(f"Wrong token type input specified, "
                          f"expected {tt.VALUE.name} received {token.token_type.name}")
     # Check what the subtype is
     if token.sub_type == tt.HEXADECIMAL:
-        # let's strip the $ from the value and return it
-        value = token.value.strip("$")
-        return np.uint8(int(value, 16))
+        # let's strip the $ from the value and add trailing 0x
+        value = int("0x" + token.value.strip("$"), 0)
+        if value > 255:  # Check if the value is 16-bit
+            return np.uint16(value)
+        return np.uint8(value)
     elif token.sub_type == tt.DECIMAL:
         # let's strip the # from the value and return it
-        return np.uint8(token.value.strip("#"))
+        value = int(token.value.strip("#"))
+        if value > 255: # Check if the value is 16-bit
+            return np.uint16(value)
+        return np.uint8(value)
     elif token.sub_type == tt.BINARY:
         # let's strip the % from the value
         value = token.value.strip("%")
@@ -179,6 +184,7 @@ def LD(cpu: Cpu, token1: Token, token2: Token) -> None:
     # Check if the second parameter input is of type value
     if token2.token_type == tt.VALUE:
         # Set the register specified in token 1 to the value of token 2
+        print(get_value(token2))
         cpu.register[token1.token_type] = get_value(token2)
     # Otherwise the second parameter must be a register
     else:
