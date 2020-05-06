@@ -78,6 +78,12 @@ def AND(cpu: Cpu, token1: Token) -> None:
     # Otherwise it must be a register
     else:
         cpu.register[tt.REGISTER_A] &= cpu.register[token1.token_type]
+    # Setup flags
+    if cpu.register[tt.REGISTER_A] == 0:
+        cpu.flags["Z"] = True
+    cpu.flags["N"] = False
+    cpu.flags["H"] = True
+    cpu.flags["C"] = False
     return
 
 
@@ -231,6 +237,12 @@ def OR(cpu: Cpu, token1: Token) -> None:
     # Otherwise it must be a register
     else:
         cpu.register[tt.REGISTER_A] |= cpu.register[token1.token_type]
+    # Setup flags
+    if cpu.register[tt.REGISTER_A] == 0:
+        cpu.flags["Z"] = True
+    cpu.flags["N"] = False
+    cpu.flags["H"] = False
+    cpu.flags["C"] = False
     return
 
 
@@ -390,6 +402,12 @@ def XOR(cpu: Cpu, token1: Token) -> None:
     # Otherwise it must be a register
     else:
         cpu.register[tt.REGISTER_A] ^= cpu.register[token1.token_type]
+    # Setup flags
+    if cpu.register[tt.REGISTER_A] == 0:
+        cpu.flags["Z"] = True
+    cpu.flags["N"] = False
+    cpu.flags["H"] = False
+    cpu.flags["C"] = False
     return
 
 
