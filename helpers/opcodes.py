@@ -8,7 +8,7 @@ from helpers.exceptions import ASMLabelError
 from cpu import Cpu
 
 
-# get_value :: Token -> uint8
+# get_value :: Token -> Union[uint8, uint16]
 def get_value(token: Token) -> Union[np.uint8, np.uint16]:
     if not token.token_type == tt.VALUE:
         raise ValueError(f"Wrong token type input specified, "
@@ -23,7 +23,7 @@ def get_value(token: Token) -> Union[np.uint8, np.uint16]:
     elif token.sub_type == tt.DECIMAL:
         # let's strip the # from the value and return it
         value = int(token.value.strip("#"))
-        if value > 255: # Check if the value is 16-bit
+        if value > 255:  # Check if the value is 16-bit
             return np.uint16(value)
         return np.uint8(value)
     elif token.sub_type == tt.BINARY:
