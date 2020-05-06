@@ -72,7 +72,13 @@ def ADD(cpu: Cpu, token1: Token, token2: Token) -> None:
 
 # AND :: Cpu -> Token -> None
 def AND(cpu: Cpu, token1: Token) -> None:
-    raise NotImplementedError()
+    # Check if the token is of type value
+    if token1.token_type == tt.VALUE:
+        cpu.register[tt.REGISTER_A] &= get_value(token1)
+    # Otherwise it must be a register
+    else:
+        cpu.register[tt.REGISTER_A] &= cpu.register[token1.token_type]
+    return
 
 
 # BIT :: Cpu -> Token -> Token -> None
