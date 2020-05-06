@@ -218,20 +218,20 @@ def POP(cpu: Cpu, token1: Token) -> None:
     # Check if the stack pointer isn't already at it's 'origin'
     if cpu.register[tt.REGISTER_SP] == 0xFFFE:
         return None
-    cpu.register[tt.REGISTER_SP] += 1
     first_byte = cpu.memory[cpu.register[tt.REGISTER_SP]]
     cpu.register[tt.REGISTER_SP] += 1
     second_byte = cpu.memory[cpu.register[tt.REGISTER_SP]]
+    cpu.register[tt.REGISTER_SP] += 1
     cpu.register[token1.token_type] = (np.uint16(first_byte) << 8) | second_byte
     return
 
 
 # PUSH :: Cpu -> Token -> None
 def PUSH(cpu: Cpu, token1: Token) -> None:
+    cpu.register[tt.REGISTER_SP] -= 1
     cpu.memory[cpu.register[tt.REGISTER_SP]] = cpu.register[token1.token_type] & 0xFF
     cpu.register[tt.REGISTER_SP] -= 1
     cpu.memory[cpu.register[tt.REGISTER_SP]] = (cpu.register[token1.token_type] >> 8)
-    cpu.register[tt.REGISTER_SP] -= 1
     return
 
 
