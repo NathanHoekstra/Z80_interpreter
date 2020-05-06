@@ -7,4 +7,7 @@ or b        ; Perform OR operation on register A with register B
 ld d, a     ; The result should now be 14, store the result inside register D
 ld b, #1    ; Load 1 inside register B
 xor b       ; Perform XOR operation on register A with register B
-ret         ; Register A should be 15, register B should be 1, register C should be 8, register D should be 14
+ld e, #100  ; Load 100 inside register E
+swap e      ; Swap the nibbles inside register E
+ret         ; Register A should be 15, register B should be 1, register C should be 8
+            ; register D should be 14, register E should be 70
