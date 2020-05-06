@@ -391,7 +391,17 @@ def SUB(cpu: Cpu, token1: Token) -> None:
 
 # SWAP :: Cpu -> Token -> None
 def SWAP(cpu: Cpu, token1: Token) -> None:
-    raise NotImplementedError()
+    register_value = cpu.register[token1.token_type]
+    result = ((register_value & 0x0F) << 4 | (register_value & 0xF0) >> 4)
+    # Set flags
+    if result <= 0:
+        result = 0
+        cpu.flags["Z"] = True
+    cpu.flags["N"] = False
+    cpu.flags["H"] = False
+    cpu.flags["C"] = False
+    cpu.register[token1.token_type] = result
+    return
 
 
 # XOR :: Cpu -> Token -> None
