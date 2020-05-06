@@ -98,8 +98,8 @@ def BIT(cpu: Cpu, token1: Token, token2: Token) -> None:
     return
 
 
-# CALL :: Cpu -> Token -> Token -> None
-def CALL(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]:
+# CALL :: Cpu -> Token -> Token -> Union[None, uint16]
+def CALL(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint16]:
     # Check if token 1 is of type label or a condition is met
     if token1.token_type == tt.LABEL or check_condition(cpu, token1):
         next_instruction = token1.line
@@ -175,9 +175,9 @@ def INC(cpu: Cpu, token1: Token) -> None:
     return
 
 
-# JP :: Cpu -> Token -> Token -> Union[None, uint8]
+# JP :: Cpu -> Token -> Token -> Union[None, uint16]
 @count
-def JP(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]:
+def JP(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint16]:
     # If the token 1 is of type label, jump straight away
     if token1.token_type == tt.LABEL:
         # Check if the label exists
@@ -196,9 +196,18 @@ def JP(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint8]:
     return None
 
 
-# JR :: Cpu -> Token -> Token -> None
-def JR(cpu: Cpu, token1: Token, token2: Token = None) -> None:
-    raise NotImplementedError()
+# JR :: Cpu -> Token -> Token -> Union[None, uint16]
+def JR(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint16]:
+    # Check if token 1 is of type value or a condition is met
+    if token1.token_type == tt.VALUE or check_condition(cpu, token1):
+        curr_address = cpu.register[tt.REGISTER_SP]
+        # If token 2 is none, it is a unconditional JR instruction
+        if token2 is None:
+            return curr_address + get_value(token1)
+        # It is a conditional JR instruction so let's take the value from token 2
+        else:
+            return curr_address + get_value(token2)
+    return None
 
 
 # LD :: Cpu -> Token -> Token -> None
@@ -281,8 +290,8 @@ def RES(cpu: Cpu, token1: Token, token2: Token) -> None:
     return
 
 
-# RET :: Cpu -> Token -> Union[None, uint8]
-def RET(cpu: Cpu, token1: Token = None) -> Union[None, np.uint8]:
+# RET :: Cpu -> Token -> Union[None, uint16]
+def RET(cpu: Cpu, token1: Token = None) -> Union[None, np.uint16]:
     # Check if the stack pointer isn't already at it's 'origin'
     if cpu.register[tt.REGISTER_SP] == 0xFFFE:
         return None
