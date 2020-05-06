@@ -91,7 +91,7 @@ def AND(cpu: Cpu, token1: Token) -> None:
 def BIT(cpu: Cpu, token1: Token, token2: Token) -> None:
     bit = int(token1.value.strip(','))
     # If the bit is not set
-    if not cpu.register[token2.token_type] & (1 << (bit - 1)):
+    if not cpu.register[token2.token_type] & (1 << bit):
         cpu.flags["Z"] = True
     cpu.flags["N"] = False
     cpu.flags["H"] = True
@@ -276,7 +276,7 @@ def PUSH(cpu: Cpu, token1: Token) -> None:
 
 # RES :: Cpu -> Token -> Token -> None
 def RES(cpu: Cpu, token1: Token, token2: Token) -> None:
-    bit = int(token1.value.strip(',')) - 1
+    bit = int(token1.value.strip(','))
     cpu.register[token2.token_type] &= ~(1 << bit)
     return
 
@@ -358,7 +358,9 @@ def SCF(cpu: Cpu) -> None:
 
 # SET :: Cpu -> Token -> Token -> None
 def SET(cpu: Cpu, token1: Token, token2: Token) -> None:
-    raise NotImplementedError()
+    bit = int(token1.value.strip(','))
+    cpu.register[token2.token_type] |= 1 << bit
+    return
 
 
 # SLA :: Cpu -> Token -> None
