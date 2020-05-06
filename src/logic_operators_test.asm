@@ -10,6 +10,7 @@ xor b       ; Perform XOR operation on register A with register B
 ld e, #100  ; Load 100 inside register E
 swap e      ; Swap the nibbles inside register E
 ld h, #5    ; Load 5 inside register H
-res 3, h    ; Reset the 3th bit inside register H
-ret         ; Register A should be 15, register B should be 1, register C should be 8
-            ; register D should be 14, register E should be 70, register H should be 1
+res 2, h    ; Reset the 3th bit inside register H
+set 7, l    ; Set the 8th bit inside register L
+ret         ; Register A should be 15, register B should be 1, register C should be 8, register D should be 14
+            ; register E should be 70, register H should be 1, register L should be 128
