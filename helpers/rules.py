@@ -76,7 +76,7 @@ regex_rules = [
     (r'#.*', tt.VALUE, tt.DECIMAL),
     (r'\d', tt.VALUE, tt.DECIMAL),
     (r'\$.*', tt.VALUE, tt.HEXADECIMAL),
-    (r'%.*', tt.BINARY)
+    (r'%.*', tt.VALUE, tt.BINARY)
 ]
 
 parser_rules = [
