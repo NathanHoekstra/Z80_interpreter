@@ -225,7 +225,13 @@ def NOP(cpu: Cpu) -> None:
 
 # OR :: Cpu -> Token -> None
 def OR(cpu: Cpu, token1: Token) -> None:
-    raise NotImplementedError()
+    # Check if the token is of type value
+    if token1.token_type == tt.VALUE:
+        cpu.register[tt.REGISTER_A] |= get_value(token1)
+    # Otherwise it must be a register
+    else:
+        cpu.register[tt.REGISTER_A] |= cpu.register[token1.token_type]
+    return
 
 
 # POP :: Cpu -> Token -> None
@@ -378,7 +384,13 @@ def SWAP(cpu: Cpu, token1: Token) -> None:
 
 # XOR :: Cpu -> Token -> None
 def XOR(cpu: Cpu, token1: Token) -> None:
-    raise NotImplementedError()
+    # Check if the token is of type value
+    if token1.token_type == tt.VALUE:
+        cpu.register[tt.REGISTER_A] ^= get_value(token1)
+    # Otherwise it must be a register
+    else:
+        cpu.register[tt.REGISTER_A] ^= cpu.register[token1.token_type]
+    return
 
 
 cpu_opcodes = {
