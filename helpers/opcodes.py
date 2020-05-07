@@ -35,6 +35,20 @@ def get_value(token: Token) -> Union[np.uint8, np.uint16]:
         raise ValueError(f"The token {tt.VALUE.name} has an unknown subtype: {token.sub_type.name}")
 
 
+# get_direct_value -> Cpu -> Token -> uint16
+def get_direct_value(cpu: Cpu, token: Token) -> np.uint16:
+    # Check if specified token is actually a direct token
+    if not token.token_type == tt.DIRECT:
+        raise ValueError(f"Wrong token type input specified, "
+                         f"expected {tt.DIRECT.name} received {token.token_type.name}")
+    # Check if the subtype is of type hex
+    if token.sub_type == tt.HEXADECIMAL:
+        value = "0x" + token.value.strip("[]$,")
+        return np.uint16(int(value, 0))
+    # Otherwise the subtype is a register
+    return cpu.register[token.sub_type]
+
+
 # check_condition :: Cpu -> Token -> Bool
 def check_condition(cpu: Cpu, token: Token) -> bool:
     if not token:  # Token can possibly be None
@@ -212,13 +226,25 @@ def JR(cpu: Cpu, token1: Token, token2: Token = None) -> Union[None, np.uint16]:
 
 # LD :: Cpu -> Token -> Token -> None
 def LD(cpu: Cpu, token1: Token, token2: Token) -> None:
-    # Check if the second parameter input is of type value
+    # Check if the second token is of type value
     if token2.token_type == tt.VALUE:
-        # Set the register specified in token 1 to the value of token 2
+        # Check if the first token is of type direct
+        if token1.token_type == tt.DIRECT:
+            cpu.memory[get_direct_value(cpu, token1)] = get_value(token2)
+            return
+        # Otherwise it must be a register
         cpu.register[token1.token_type] = get_value(token2)
-    # Otherwise the second parameter must be a register
+    # Check if the second token is of type direct
+    elif token2.token_type == tt.DIRECT:
+        cpu.register[token1.token_type] = cpu.memory[get_direct_value(cpu, token2)]
+        return
+    # Otherwise it must be register
     else:
-        # Set the value of the register specified in token 1 to be the value of the register specified in token 2
+        # Check if the first token is of type direct
+        if token1.token_type == tt.DIRECT:
+            cpu.memory[get_direct_value(cpu, token1)] = cpu.register[token2.token_type]
+            return
+        # Otherwise it must be register to register operations
         cpu.register[token1.token_type] = cpu.register[token2.token_type]
     return
 
