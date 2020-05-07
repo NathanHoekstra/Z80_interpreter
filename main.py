@@ -3,10 +3,11 @@ import lexer
 import token_parser
 import run
 from cpu import Cpu
+from display import Display
 
 
 if __name__ == "__main__":
-    code = Utilities.read_asm_file("src/add_increment_test.asm")
+    code = Utilities.read_asm_file("src/display_test.asm")
     print("\n----- Stage 1 (Lexer) ----\n")
     tokens = lexer.lexer(code)
     for token in tokens:
@@ -18,5 +19,6 @@ if __name__ == "__main__":
         print(parsed_item)
     print("\n----- Stage 3 (Execution) ----\n")
     z80 = Cpu()
-    run.runner(z80, parsed)
+    display = Display()
+    run.runner(z80, parsed, display)
     print(z80)

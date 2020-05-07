@@ -2,8 +2,9 @@ from typing import List, Dict
 from helpers.token import Token
 from helpers.enums import TokenType
 from helpers.opcodes import cpu_opcodes, JP
-from helpers.exceptions import ASMSyntaxError
+from helpers.exceptions import ASMSyntaxError, DisplayClosed
 from cpu import Cpu
+from display import Display
 
 
 # search_labels :: List[List[Token]] -> Dict -> Dict
@@ -29,7 +30,7 @@ def search_labels(parsed_tokens: List[List[Token]], result: Dict = None) -> Dict
 
 
 # runner :: Cpu -> List[List[Token]] -> None
-def runner(cpu: Cpu, parsed_tokens: List[List[Token]]) -> None:
+def runner(cpu: Cpu, parsed_tokens: List[List[Token]], display: Display = None) -> None:
     # Is the program finished?
     if cpu.register[TokenType.REGISTER_PC] >= len(parsed_tokens):
         print(f"[info] The program has jumped {JP.counter} times\n")
@@ -56,5 +57,10 @@ def runner(cpu: Cpu, parsed_tokens: List[List[Token]]) -> None:
     else:
         cpu.register[TokenType.REGISTER_PC] += 1
 
+    # Check if a display is supplied
+    if display:
+        if display.draw(cpu):
+            raise DisplayClosed(63, "Display has been closed")  # Hardcoded line number, not nice :/
+
     # call the runner recursively
-    return runner(cpu, parsed_tokens)
+    return runner(cpu, parsed_tokens, display)

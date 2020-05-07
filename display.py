@@ -1,12 +1,6 @@
 import pygame
-
-RED = [255, 0, 0]
-GREEN = [0, 255, 0]
-BLUE = [0, 0, 255]
-BROWN = [153, 102, 17]
-YELLOW = [255, 255, 0]
-WHITE = [255, 255, 255]
-BLACK = [0, 0, 0]
+import numpy as np
+from cpu import Cpu
 
 
 class Pixel:
@@ -40,14 +34,23 @@ class Display:
             for pixel in range(self.pixel_count):
                 self.pixel_list.append(Pixel(pixel * self.pixel_size, pixel_row * self.pixel_size, self.pixel_size))
 
-    def run(self):
-        while not self.finished:
-            self.game_display.fill((255, 255, 255))
-            # event handler
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.finished = True
-            # Draw pixels
-            for pixel in self.pixel_list:
-                pixel.render(self.game_display)
-            pygame.display.flip()
+    @staticmethod
+    def get_color(value: np.uint8) -> pygame.color:
+        red = (value >> 5) * 255 / 7
+        green = ((value >> 2) & 0x07) * 255 / 7
+        blue = (value & 0x03) * 255 / 3
+        return [red, green, blue]
+
+    def draw(self, cpu: Cpu) -> bool:
+        self.game_display.fill((0, 0, 0))
+        # event handler
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return True
+        # Set pixel values from cpu mem
+        for index, pixel in enumerate(self.pixel_list):
+            pixel.set_color(self.get_color(cpu.memory[index]))
+        # Draw pixels
+        for pixel in self.pixel_list:
+            pixel.render(self.game_display)
+        pygame.display.flip()

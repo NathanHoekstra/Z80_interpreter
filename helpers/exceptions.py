@@ -16,3 +16,8 @@ class ASMSyntaxError(NoTraceBackWithLineNumber):
 # Inherited ASM label error exception
 class ASMLabelError(NoTraceBackWithLineNumber):
     pass
+
+
+# Inherited Display Closed error exception
+class DisplayClosed(NoTraceBackWithLineNumber):
+    pass
