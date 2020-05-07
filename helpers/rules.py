@@ -265,6 +265,7 @@ parser_rules = [
     (tt.LD, tt.DIRECT, tt.REGISTER_E),
     (tt.LD, tt.DIRECT, tt.REGISTER_H),
     (tt.LD, tt.DIRECT, tt.REGISTER_L),
+    (tt.LD, tt.DIRECT, tt.VALUE),
     # LDD instructions
     (tt.LDD, tt.REGISTER_A, tt.DIRECT),
     (tt.LDD, tt.DIRECT, tt.REGISTER_A),
