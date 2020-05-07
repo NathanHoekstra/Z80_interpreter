@@ -183,7 +183,12 @@ def HALT(cpu: Cpu) -> None:
 # INC :: Cpu -> Token -> None
 def INC(cpu: Cpu, token1: Token) -> None:
     # TODO: Set H flag
-    cpu.register[token1.token_type] += 1
+    # Check if the token is of type direct
+    if token1.token_type == tt.DIRECT:
+        cpu.memory[get_direct_value(cpu, token1)] += 1
+    # Otherwise an register is incremented
+    else:
+        cpu.register[token1.token_type] += 1
     # Reset the the subtract flag since a increment was performed
     cpu.flags["N"] = False
     return
