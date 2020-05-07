@@ -50,6 +50,12 @@ regex_rules = [
     (r'(?:^|\W)xor(?:$|\W)|(?:^|\W)XOR(?:$|\W)', tt.XOR),
     # Labels
     (r'.*:|[a-zA-Z]{3,}', tt.LABEL),
+    # Direct memory access
+    (r'(?:^|\W)\[af](?:$|\W)|(?:^|\W)\[AF](?:$|\W)', tt.DIRECT, tt.REGISTER_AF),
+    (r'(?:^|\W)\[bc](?:$|\W)|(?:^|\W)\[BC](?:$|\W)', tt.DIRECT, tt.REGISTER_BC),
+    (r'(?:^|\W)\[de](?:$|\W)|(?:^|\W)\[DE](?:$|\W)', tt.DIRECT, tt.REGISTER_DE),
+    (r'(?:^|\W)\[hl](?:$|\W)|(?:^|\W)\[HL](?:$|\W)', tt.DIRECT, tt.REGISTER_HL),
+    (r'\[\$.*\]', tt.DIRECT, tt.HEXADECIMAL),
     # 16-bit registers
     (r'(?:^|\W)af(?:$|\W)|(?:^|\W)AF(?:$|\W)', tt.REGISTER_AF),
     (r'(?:^|\W)bc(?:$|\W)|(?:^|\W)BC(?:$|\W)', tt.REGISTER_BC),
@@ -57,12 +63,6 @@ regex_rules = [
     (r'(?:^|\W)hl(?:$|\W)|(?:^|\W)HL(?:$|\W)', tt.REGISTER_HL),
     (r'(?:^|\W)sp(?:$|\W)|(?:^|\W)SP(?:$|\W)', tt.REGISTER_SP),
     (r'(?:^|\W)pc(?:$|\W)|(?:^|\W)PC(?:$|\W)', tt.REGISTER_PC),
-    # Direct memory access
-    (r'(?:^|\W)\[af](?:$|\W)|(?:^|\W)\[AF](?:$|\W)', tt.DIRECT, tt.REGISTER_AF),
-    (r'(?:^|\W)\[bc](?:$|\W)|(?:^|\W)\[BC](?:$|\W)', tt.DIRECT, tt.REGISTER_BC),
-    (r'(?:^|\W)\[de](?:$|\W)|(?:^|\W)\[DE](?:$|\W)', tt.DIRECT, tt.REGISTER_DE),
-    (r'(?:^|\W)\[hl](?:$|\W)|(?:^|\W)\[HL](?:$|\W)', tt.DIRECT, tt.REGISTER_HL),
-    (r'\[\$.*\]', tt.DIRECT, tt.HEXADECIMAL),
     # 8-bit Registers
     (r'(?:^|\W)a(?:$|\W)|(?:^|\W)A(?:$|\W)', tt.REGISTER_A),
     (r'(?:^|\W)b(?:$|\W)|(?:^|\W)B(?:$|\W)', tt.REGISTER_B),
