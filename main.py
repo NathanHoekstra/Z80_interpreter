@@ -1,3 +1,4 @@
+import sys
 from helpers.utilities import Utilities
 import lexer
 import token_parser
@@ -7,6 +8,7 @@ from display import Display
 
 
 if __name__ == "__main__":
+    sys.setrecursionlimit(10**6)
     code = Utilities.read_asm_file("src/display_test.asm")
     print("\n----- Stage 1 (Lexer) ----\n")
     tokens = lexer.lexer(code)
