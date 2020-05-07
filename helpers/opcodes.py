@@ -441,6 +441,9 @@ def SUB(cpu: Cpu, token1: Token) -> None:
     # check if the token is of type value
     if token1.token_type == tt.VALUE:
         cpu.register[tt.REGISTER_A] -= get_value(token1)
+    # check if the token is of type direct
+    elif token1.token_type == tt.DIRECT:
+        cpu.register[tt.REGISTER_A] -= cpu.memory[get_direct_value(cpu, token1)]
     # Otherwise it must be an register
     else:
         cpu.register[tt.REGISTER_A] -= cpu.register[token1.token_type]
@@ -454,8 +457,13 @@ def SUB(cpu: Cpu, token1: Token) -> None:
 
 # SWAP :: Cpu -> Token -> None
 def SWAP(cpu: Cpu, token1: Token) -> None:
-    register_value = cpu.register[token1.token_type]
-    result = ((register_value & 0x0F) << 4 | (register_value & 0xF0) >> 4)
+    # Check if we are dealing with a value in memory (direct)
+    if token1.token_type == tt.DIRECT:
+        value = cpu.memory[get_direct_value(cpu, token1)]
+    # Otherwise it must be a register
+    else:
+        value = cpu.register[token1.token_type]
+    result = ((value & 0x0F) << 4 | (value & 0xF0) >> 4)
     # Set flags
     if result <= 0:
         result = 0
@@ -463,7 +471,10 @@ def SWAP(cpu: Cpu, token1: Token) -> None:
     cpu.flags["N"] = False
     cpu.flags["H"] = False
     cpu.flags["C"] = False
-    cpu.register[token1.token_type] = result
+    if token1.token_type == tt.DIRECT:
+        cpu.memory[get_direct_value(cpu, token1)] = result
+    else:
+        cpu.register[token1.token_type] = result
     return
 
 
@@ -472,6 +483,9 @@ def XOR(cpu: Cpu, token1: Token) -> None:
     # Check if the token is of type value
     if token1.token_type == tt.VALUE:
         cpu.register[tt.REGISTER_A] ^= get_value(token1)
+    # Check if the token is of type direct
+    elif token1.token_type == tt.DIRECT:
+        cpu.register[tt.REGISTER_A] ^= cpu.memory[get_direct_value(cpu, token1)]
     # Otherwise it must be a register
     else:
         cpu.register[tt.REGISTER_A] ^= cpu.register[token1.token_type]
