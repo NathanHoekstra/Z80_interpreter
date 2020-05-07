@@ -57,6 +57,12 @@ regex_rules = [
     (r'(?:^|\W)hl(?:$|\W)|(?:^|\W)HL(?:$|\W)', tt.REGISTER_HL),
     (r'(?:^|\W)sp(?:$|\W)|(?:^|\W)SP(?:$|\W)', tt.REGISTER_SP),
     (r'(?:^|\W)pc(?:$|\W)|(?:^|\W)PC(?:$|\W)', tt.REGISTER_PC),
+    # Direct memory access
+    (r'(?:^|\W)\[af](?:$|\W)|(?:^|\W)\[AF](?:$|\W)', tt.DIRECT, tt.REGISTER_AF),
+    (r'(?:^|\W)\[bc](?:$|\W)|(?:^|\W)\[BC](?:$|\W)', tt.DIRECT, tt.REGISTER_BC),
+    (r'(?:^|\W)\[de](?:$|\W)|(?:^|\W)\[DE](?:$|\W)', tt.DIRECT, tt.REGISTER_DE),
+    (r'(?:^|\W)\[hl](?:$|\W)|(?:^|\W)\[HL](?:$|\W)', tt.DIRECT, tt.REGISTER_HL),
+    (r'\[\$.*\]', tt.DIRECT, tt.HEXADECIMAL),
     # 8-bit Registers
     (r'(?:^|\W)a(?:$|\W)|(?:^|\W)A(?:$|\W)', tt.REGISTER_A),
     (r'(?:^|\W)b(?:$|\W)|(?:^|\W)B(?:$|\W)', tt.REGISTER_B),
@@ -170,6 +176,7 @@ parser_rules = [
     (tt.INC, tt.REGISTER_DE),
     (tt.INC, tt.REGISTER_HL),
     (tt.INC, tt.REGISTER_SP),
+    (tt.INC, tt.DIRECT),
     # JP instructions
     (tt.JP, tt.LABEL),
     (tt.JP, tt.CONDITION_NZ, tt.LABEL),
@@ -202,9 +209,7 @@ parser_rules = [
     (tt.LD, tt.REGISTER_A, tt.REGISTER_E),
     (tt.LD, tt.REGISTER_A, tt.REGISTER_H),
     (tt.LD, tt.REGISTER_A, tt.REGISTER_L),
-    (tt.LD, tt.REGISTER_A, tt.REGISTER_BC),
-    (tt.LD, tt.REGISTER_A, tt.REGISTER_DE),
-    (tt.LD, tt.REGISTER_A, tt.REGISTER_HL),
+    (tt.LD, tt.REGISTER_A, tt.DIRECT),
     (tt.LD, tt.REGISTER_B, tt.REGISTER_A),
     (tt.LD, tt.REGISTER_B, tt.REGISTER_B),
     (tt.LD, tt.REGISTER_B, tt.REGISTER_C),
@@ -212,7 +217,7 @@ parser_rules = [
     (tt.LD, tt.REGISTER_B, tt.REGISTER_E),
     (tt.LD, tt.REGISTER_B, tt.REGISTER_H),
     (tt.LD, tt.REGISTER_B, tt.REGISTER_L),
-    (tt.LD, tt.REGISTER_B, tt.REGISTER_HL),
+    (tt.LD, tt.REGISTER_B, tt.DIRECT),
     (tt.LD, tt.REGISTER_C, tt.REGISTER_A),
     (tt.LD, tt.REGISTER_C, tt.REGISTER_B),
     (tt.LD, tt.REGISTER_C, tt.REGISTER_C),
@@ -220,7 +225,7 @@ parser_rules = [
     (tt.LD, tt.REGISTER_C, tt.REGISTER_E),
     (tt.LD, tt.REGISTER_C, tt.REGISTER_H),
     (tt.LD, tt.REGISTER_C, tt.REGISTER_L),
-    (tt.LD, tt.REGISTER_C, tt.REGISTER_HL),
+    (tt.LD, tt.REGISTER_C, tt.DIRECT),
     (tt.LD, tt.REGISTER_D, tt.REGISTER_A),
     (tt.LD, tt.REGISTER_D, tt.REGISTER_B),
     (tt.LD, tt.REGISTER_D, tt.REGISTER_C),
@@ -228,7 +233,7 @@ parser_rules = [
     (tt.LD, tt.REGISTER_D, tt.REGISTER_E),
     (tt.LD, tt.REGISTER_D, tt.REGISTER_H),
     (tt.LD, tt.REGISTER_D, tt.REGISTER_L),
-    (tt.LD, tt.REGISTER_D, tt.REGISTER_HL),
+    (tt.LD, tt.REGISTER_D, tt.DIRECT),
     (tt.LD, tt.REGISTER_E, tt.REGISTER_A),
     (tt.LD, tt.REGISTER_E, tt.REGISTER_B),
     (tt.LD, tt.REGISTER_E, tt.REGISTER_C),
@@ -236,7 +241,7 @@ parser_rules = [
     (tt.LD, tt.REGISTER_E, tt.REGISTER_E),
     (tt.LD, tt.REGISTER_E, tt.REGISTER_H),
     (tt.LD, tt.REGISTER_E, tt.REGISTER_L),
-    (tt.LD, tt.REGISTER_E, tt.REGISTER_HL),
+    (tt.LD, tt.REGISTER_E, tt.DIRECT),
     (tt.LD, tt.REGISTER_H, tt.REGISTER_A),
     (tt.LD, tt.REGISTER_H, tt.REGISTER_B),
     (tt.LD, tt.REGISTER_H, tt.REGISTER_C),
@@ -244,7 +249,7 @@ parser_rules = [
     (tt.LD, tt.REGISTER_H, tt.REGISTER_E),
     (tt.LD, tt.REGISTER_H, tt.REGISTER_H),
     (tt.LD, tt.REGISTER_H, tt.REGISTER_L),
-    (tt.LD, tt.REGISTER_H, tt.REGISTER_HL),
+    (tt.LD, tt.REGISTER_H, tt.DIRECT),
     (tt.LD, tt.REGISTER_L, tt.REGISTER_A),
     (tt.LD, tt.REGISTER_L, tt.REGISTER_B),
     (tt.LD, tt.REGISTER_L, tt.REGISTER_C),
@@ -252,25 +257,23 @@ parser_rules = [
     (tt.LD, tt.REGISTER_L, tt.REGISTER_E),
     (tt.LD, tt.REGISTER_L, tt.REGISTER_H),
     (tt.LD, tt.REGISTER_L, tt.REGISTER_L),
-    (tt.LD, tt.REGISTER_L, tt.REGISTER_HL),
-    (tt.LD, tt.REGISTER_BC, tt.REGISTER_A),
-    (tt.LD, tt.REGISTER_DE, tt.REGISTER_A),
-    (tt.LD, tt.REGISTER_HL, tt.REGISTER_A),
-    (tt.LD, tt.REGISTER_HL, tt.REGISTER_B),
-    (tt.LD, tt.REGISTER_HL, tt.REGISTER_C),
-    (tt.LD, tt.REGISTER_HL, tt.REGISTER_D),
-    (tt.LD, tt.REGISTER_HL, tt.REGISTER_E),
-    (tt.LD, tt.REGISTER_HL, tt.REGISTER_H),
-    (tt.LD, tt.REGISTER_HL, tt.REGISTER_L),
+    (tt.LD, tt.REGISTER_L, tt.DIRECT),
+    (tt.LD, tt.DIRECT, tt.REGISTER_A),
+    (tt.LD, tt.DIRECT, tt.REGISTER_B),
+    (tt.LD, tt.DIRECT, tt.REGISTER_C),
+    (tt.LD, tt.DIRECT, tt.REGISTER_D),
+    (tt.LD, tt.DIRECT, tt.REGISTER_E),
+    (tt.LD, tt.DIRECT, tt.REGISTER_H),
+    (tt.LD, tt.DIRECT, tt.REGISTER_L),
     # LDD instructions
-    (tt.LDD, tt.REGISTER_A, tt.REGISTER_HL),
-    (tt.LDD, tt.REGISTER_HL, tt.REGISTER_A),
+    (tt.LDD, tt.REGISTER_A, tt.DIRECT),
+    (tt.LDD, tt.DIRECT, tt.REGISTER_A),
     # LDH instructions
     (tt.LDH, tt.VALUE, tt.REGISTER_A),
     (tt.LDH, tt.REGISTER_A, tt.VALUE),
     # LDI instructions
-    (tt.LDI, tt.REGISTER_A, tt.REGISTER_HL),
-    (tt.LDI, tt.REGISTER_HL, tt.REGISTER_A),
+    (tt.LDI, tt.REGISTER_A, tt.DIRECT),
+    (tt.LDI, tt.DIRECT, tt.REGISTER_A),
     # NOP instructions
     (tt.NOP,),
     # OR instructions
@@ -281,7 +284,7 @@ parser_rules = [
     (tt.OR, tt.REGISTER_E),
     (tt.OR, tt.REGISTER_H),
     (tt.OR, tt.REGISTER_L),
-    (tt.OR, tt.REGISTER_HL),
+    (tt.OR, tt.DIRECT),
     (tt.OR, tt.VALUE),
     # POP instructions
     (tt.POP, tt.REGISTER_AF),
@@ -301,7 +304,7 @@ parser_rules = [
     (tt.RES, tt.BIT_VALUE, tt.REGISTER_E),
     (tt.RES, tt.BIT_VALUE, tt.REGISTER_H),
     (tt.RES, tt.BIT_VALUE, tt.REGISTER_L),
-    (tt.RES, tt.BIT_VALUE, tt.REGISTER_HL),
+    (tt.RES, tt.BIT_VALUE, tt.DIRECT),
     # RET instructions
     (tt.RET, tt.CONDITION_NZ),
     (tt.RET, tt.CONDITION_Z),
@@ -318,7 +321,7 @@ parser_rules = [
     (tt.RL, tt.REGISTER_E),
     (tt.RL, tt.REGISTER_H),
     (tt.RL, tt.REGISTER_L),
-    (tt.RL, tt.REGISTER_HL),
+    (tt.RL, tt.DIRECT),
     # RLA instructions
     (tt.RLA,),
     # RLC instructions
@@ -329,7 +332,7 @@ parser_rules = [
     (tt.RLC, tt.REGISTER_E),
     (tt.RLC, tt.REGISTER_H),
     (tt.RLC, tt.REGISTER_L),
-    (tt.RLC, tt.REGISTER_HL),
+    (tt.RLC, tt.DIRECT),
     # RLCA instructions
     (tt.RLCA,),
     # RR instructions
@@ -340,7 +343,7 @@ parser_rules = [
     (tt.RR, tt.REGISTER_E),
     (tt.RR, tt.REGISTER_H),
     (tt.RR, tt.REGISTER_L),
-    (tt.RR, tt.REGISTER_HL),
+    (tt.RR, tt.DIRECT),
     # RRA instructions
     (tt.RRA,),
     # RRC instructions
@@ -351,7 +354,7 @@ parser_rules = [
     (tt.RRC, tt.REGISTER_E),
     (tt.RRC, tt.REGISTER_H),
     (tt.RRC, tt.REGISTER_L),
-    (tt.RRC, tt.REGISTER_HL),
+    (tt.RRC, tt.DIRECT),
     # RRCA instructions
     (tt.RRCA,),
     # RST instructions
@@ -364,7 +367,7 @@ parser_rules = [
     (tt.SBC, tt.REGISTER_A, tt.REGISTER_E),
     (tt.SBC, tt.REGISTER_A, tt.REGISTER_H),
     (tt.SBC, tt.REGISTER_A, tt.REGISTER_L),
-    (tt.SBC, tt.REGISTER_A, tt.REGISTER_HL),
+    (tt.SBC, tt.REGISTER_A, tt.DIRECT),
     (tt.SBC, tt.REGISTER_A, tt.VALUE),
     # SCF instructions
     (tt.SCF,),
@@ -376,7 +379,7 @@ parser_rules = [
     (tt.SET, tt.BIT_VALUE, tt.REGISTER_E),
     (tt.SET, tt.BIT_VALUE, tt.REGISTER_H),
     (tt.SET, tt.BIT_VALUE, tt.REGISTER_L),
-    (tt.SET, tt.BIT_VALUE, tt.REGISTER_HL),
+    (tt.SET, tt.BIT_VALUE, tt.DIRECT),
     # SLA instructions
     (tt.SLA, tt.REGISTER_A),
     (tt.SLA, tt.REGISTER_B),
@@ -385,7 +388,7 @@ parser_rules = [
     (tt.SLA, tt.REGISTER_E),
     (tt.SLA, tt.REGISTER_H),
     (tt.SLA, tt.REGISTER_L),
-    (tt.SLA, tt.REGISTER_HL),
+    (tt.SLA, tt.DIRECT),
     # SRA instructions
     (tt.SRA, tt.REGISTER_A),
     (tt.SRA, tt.REGISTER_B),
@@ -394,7 +397,7 @@ parser_rules = [
     (tt.SRA, tt.REGISTER_E),
     (tt.SRA, tt.REGISTER_H),
     (tt.SRA, tt.REGISTER_L),
-    (tt.SRA, tt.REGISTER_HL),
+    (tt.SRA, tt.DIRECT),
     # SRL instructions
     (tt.SRL, tt.REGISTER_A),
     (tt.SRL, tt.REGISTER_B),
@@ -403,7 +406,7 @@ parser_rules = [
     (tt.SRL, tt.REGISTER_E),
     (tt.SRL, tt.REGISTER_H),
     (tt.SRL, tt.REGISTER_L),
-    (tt.SRL, tt.REGISTER_HL),
+    (tt.SRL, tt.DIRECT),
     # STOP instructions
     (tt.STOP,),
     # SUB instructions
@@ -414,7 +417,7 @@ parser_rules = [
     (tt.SUB, tt.REGISTER_E),
     (tt.SUB, tt.REGISTER_H),
     (tt.SUB, tt.REGISTER_L),
-    (tt.SUB, tt.REGISTER_HL),
+    (tt.SUB, tt.DIRECT),
     (tt.SUB, tt.VALUE),
     # SWAP instructions
     (tt.SWAP, tt.REGISTER_A),
@@ -424,7 +427,7 @@ parser_rules = [
     (tt.SWAP, tt.REGISTER_E),
     (tt.SWAP, tt.REGISTER_H),
     (tt.SWAP, tt.REGISTER_L),
-    (tt.SWAP, tt.REGISTER_HL),
+    (tt.SWAP, tt.DIRECT),
     # XOR instructions
     (tt.XOR, tt.REGISTER_A),
     (tt.XOR, tt.REGISTER_B),
@@ -433,7 +436,7 @@ parser_rules = [
     (tt.XOR, tt.REGISTER_E),
     (tt.XOR, tt.REGISTER_H),
     (tt.XOR, tt.REGISTER_L),
-    (tt.XOR, tt.REGISTER_HL),
+    (tt.XOR, tt.DIRECT),
     (tt.XOR, tt.VALUE),
     # Label rule
     (tt.LABEL,)

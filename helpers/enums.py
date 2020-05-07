@@ -79,6 +79,7 @@ class TokenType(Enum):
     BINARY = 82
     VALUE = 83  # This is decimal, hex or binary
     BIT_VALUE = 84  # Value between 0 and 7
+    DIRECT = 85  # Direct memory access
 
     # --- Labels ---
     LABEL = 90
