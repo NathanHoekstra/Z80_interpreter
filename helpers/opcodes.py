@@ -280,6 +280,9 @@ def OR(cpu: Cpu, token1: Token) -> None:
     # Check if the token is of type value
     if token1.token_type == tt.VALUE:
         cpu.register[tt.REGISTER_A] |= get_value(token1)
+    # Check if the token is of type direct
+    elif token1.token_type == tt.DIRECT:
+        cpu.register[tt.REGISTER_A] |= cpu.memory[get_direct_value(cpu, token1)]
     # Otherwise it must be a register
     else:
         cpu.register[tt.REGISTER_A] |= cpu.register[token1.token_type]
@@ -317,7 +320,12 @@ def PUSH(cpu: Cpu, token1: Token) -> None:
 # RES :: Cpu -> Token -> Token -> None
 def RES(cpu: Cpu, token1: Token, token2: Token) -> None:
     bit = int(token1.value.strip(','))
-    cpu.register[token2.token_type] &= ~(1 << bit)
+    # Check if token 2 is of type direct
+    if token2.token_type == tt.DIRECT:
+        cpu.memory[get_direct_value(cpu, token2)] &= ~(1 << bit)
+    # Otherwise it is an register
+    else:
+        cpu.register[token2.token_type] &= ~(1 << bit)
     return
 
 
@@ -399,7 +407,12 @@ def SCF(cpu: Cpu) -> None:
 # SET :: Cpu -> Token -> Token -> None
 def SET(cpu: Cpu, token1: Token, token2: Token) -> None:
     bit = int(token1.value.strip(','))
-    cpu.register[token2.token_type] |= 1 << bit
+    # Check if token 2 is of type direct
+    if token2.token_type == tt.DIRECT:
+        cpu.memory[get_direct_value(cpu, token2)] |= 1 << bit
+    # Otherwise it must be a register
+    else:
+        cpu.register[token2.token_type] |= 1 << bit
     return
 
 
