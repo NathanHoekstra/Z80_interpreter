@@ -47,7 +47,7 @@ class Display:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return True
-        # Set pixel values from cpu mem
+        # Set pixel values retreived from cpu mem
         for index, pixel in enumerate(self.pixel_list):
             pixel.set_color(self.get_color(cpu.memory[index]))
         # Draw pixels
