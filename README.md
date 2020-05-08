@@ -25,3 +25,7 @@ There are two files which can be executed (`main.py` and `run.py`)
 ### Examples
 
 There are pre-made test assembly files, which can be found inside the `src/` folder and are fully documented.
+
+
+## Screenshot
+<img width="1440" alt="Schermafbeelding 2020-05-08 om 13 41 19" src="https://user-images.githubusercontent.com/31623036/81402483-ca333500-9131-11ea-9920-e4fc0aebaa34.png">
