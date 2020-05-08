@@ -22,6 +22,8 @@ There are two files which can be executed (`main.py` and `run.py`)
 1. `main.py` will load the `display_test.asm` file and print the result of every 'stage'.
 2. `run.py` which asks for command line parameters <br>example: `python3 run.py --input src/display_test.asm --display True`
 
+### Displaying pixels
+The display memory range is `0x0000` - `0x00FF` write a value between 0-255 to display a color. The full color range can be seen inside the screenshot.
 
 
 ### Examples
