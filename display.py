@@ -1,3 +1,5 @@
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"   # Remove PyGame support prompt
 import pygame
 import numpy as np
 from cpu import Cpu
