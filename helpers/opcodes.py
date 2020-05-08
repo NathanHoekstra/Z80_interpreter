@@ -7,6 +7,10 @@ from helpers.token import Token
 from helpers.exceptions import ASMLabelError
 from cpu import Cpu
 
+#
+# NOTE: As discussed with Diederik, I won't be making a copy of the CPU class
+#
+
 
 # get_value :: Token -> Union[uint8, uint16]
 def get_value(token: Token) -> Union[np.uint8, np.uint16]:

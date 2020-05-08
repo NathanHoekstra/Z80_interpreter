@@ -12,6 +12,11 @@ from cpu import Cpu
 from display import Display
 
 
+#
+# NOTE: As discussed with Diederik, I won't be making a copy of the CPU class
+#
+
+
 # search_labels :: List[List[Token]] -> Dict -> Dict
 def search_labels(parsed_tokens: List[List[Token]], result: Dict = None) -> Dict:
     # If the dict is not initialized, initialize it
