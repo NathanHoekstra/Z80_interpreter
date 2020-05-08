@@ -1,5 +1,7 @@
 # Z80_interpreter (GameBoy subset)
-A Z80 ASM interpreter (emulator) written in Python
+A Z80 ASM interpreter (emulator) written in Python<br>
+![GameBoy](https://user-images.githubusercontent.com/31623036/81413989-a0383d80-9146-11ea-8be7-99123ede8f0e.png)
+
 
 ## Features
 
