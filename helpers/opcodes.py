@@ -11,7 +11,7 @@ from cpu import Cpu
 # get_value :: Token -> Union[uint8, uint16]
 def get_value(token: Token) -> Union[np.uint8, np.uint16]:
     if not token.token_type == tt.VALUE:
-        # This raise is ment to notify the programmer for invalid use (not assembly file errors)
+        # This raise is meant to notify the programmer for invalid use (not assembly file errors)
         raise ValueError(f"Wrong token type input specified, "
                          f"expected {tt.VALUE.name} received {token.token_type.name}")
     # Check what the subtype is
@@ -33,7 +33,7 @@ def get_value(token: Token) -> Union[np.uint8, np.uint16]:
         return np.uint8(int(value, 2))
     # The token value has an unknown subtype
     else:
-        # This raise is ment to notify the programmer for invalid use (not assembly file errors)
+        # This raise is meant to notify the programmer for invalid use (not assembly file errors)
         raise ValueError(f"The token {tt.VALUE.name} has an unknown subtype: {token.sub_type.name}")
 
 
@@ -41,7 +41,7 @@ def get_value(token: Token) -> Union[np.uint8, np.uint16]:
 def get_direct_value(cpu: Cpu, token: Token) -> np.uint16:
     # Check if specified token is actually a direct token
     if not token.token_type == tt.DIRECT:
-        # This raise is ment to notify the programmer for invalid use (not assembly file errors)
+        # This raise is meant to notify the programmer for invalid use (not assembly file errors)
         raise ValueError(f"Wrong token type input specified, "
                          f"expected {tt.DIRECT.name} received {token.token_type.name}")
     # Check if the subtype is of type hex
