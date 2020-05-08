@@ -21,9 +21,11 @@ class Display:
     def __init__(self, display_size: int = 640):
         pygame.init()
         pygame.display.set_caption("Z80 display")
+        self.icon = pygame.image.load('img/gameboy.png')
         self.finished = False
         self.pixel_count = 16
         self.game_display = pygame.display.set_mode((display_size, display_size))
+        pygame.display.set_icon(self.icon)
         self.pixel_size = display_size / self.pixel_count
         self.clock = pygame.time.Clock()
         self.pixel_list = []
