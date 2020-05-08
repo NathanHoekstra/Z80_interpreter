@@ -7,7 +7,7 @@ draw:
     inc hl          ; Increment register HL by one
     inc b           ; Increment register B (next color)
     dec a           ; Decrement register A by one
-    jp nz, draw     ; Jump to draw if a is not zero
+    jp nz, draw     ; Jump to draw if register A is not zero
 
 end:
     ret             ; Program is finished
