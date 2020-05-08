@@ -13,6 +13,7 @@ A Z80 ASM interpreter (emulator) written in Python
 ## Limitations
 
 Not all instructions are implemented, most of those unimplemented functions have to do with interrupts. Trying to call an unimplemented function will result in an NotImplementedError.
+<br>Note: The unimplemented instructions can be found inside `helpers/opcodes.py`.
 
 ## How to use
 - Install the required python packages using `pip install -r requirements.txt`
