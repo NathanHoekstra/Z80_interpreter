@@ -8,7 +8,7 @@ A Z80 ASM interpreter (emulator) written in Python
 - Parser to check the validity of the tokens
 - Runner to execute the parsed tokens
 - 16x16 pixel display that reads pixel color values from CPU memory (I/O)
-- Error handling, invalid assembly lines are printed to the console
+- Error handling: Invalid assembly lines are printed to the console including the line number.
 
 ## Limitations
 
