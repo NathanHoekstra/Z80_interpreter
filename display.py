@@ -7,36 +7,38 @@ from cpu import Cpu
 
 class Pixel:
     def __init__(self, position_x, position_y, size):
-        self.color = [255, 255, 255]
-        self.position_x = position_x
-        self.position_y = position_y
-        self.size = size
+        self.__color = [255, 255, 255]
+        self.__position_x = position_x
+        self.__position_y = position_y
+        self.__size = size
 
     def set_color(self, color: list):
-        self.color = color
+        self.__color = color
 
     def render(self, screen):
-        pygame.draw.rect(screen, self.color, (self.position_x, self.position_y, self.size, self.size))
+        pygame.draw.rect(screen, self.__color, (self.__position_x, self.__position_y, self.__size, self.__size))
 
 
 class Display:
     def __init__(self, display_size: int = 640):
         pygame.init()
         pygame.display.set_caption("Z80 display")
-        self.icon = pygame.image.load('img/gameboy.png')
-        self.finished = False
-        self.pixel_count = 16
-        self.game_display = pygame.display.set_mode((display_size, display_size))
-        pygame.display.set_icon(self.icon)
-        self.pixel_size = display_size / self.pixel_count
-        self.clock = pygame.time.Clock()
-        self.pixel_list = []
+        self.__icon = pygame.image.load('img/gameboy.png')
+        self.__finished = False
+        self.__pixel_count = 16
+        self.__game_display = pygame.display.set_mode((display_size, display_size))
+        pygame.display.set_icon(self.__icon)
+        self.__pixel_size = display_size / self.__pixel_count
+        self.__clock = pygame.time.Clock()
+        self.__pixel_list = []
         self.__generate_pixel_array()
 
     def __generate_pixel_array(self):
-        for pixel_row in range(self.pixel_count):
-            for pixel in range(self.pixel_count):
-                self.pixel_list.append(Pixel(pixel * self.pixel_size, pixel_row * self.pixel_size, self.pixel_size))
+        for pixel_row in range(self.__pixel_count):
+            for pixel in range(self.__pixel_count):
+                self.__pixel_list.append(
+                    Pixel(pixel * self.__pixel_size, pixel_row * self.__pixel_size, self.__pixel_size)
+                )
 
     @staticmethod
     def get_color(value: np.uint8) -> pygame.color:
@@ -46,15 +48,15 @@ class Display:
         return [red, green, blue]
 
     def draw(self, cpu: Cpu) -> bool:
-        self.game_display.fill((0, 0, 0))
+        self.__game_display.fill((0, 0, 0))
         # event handler
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return True
-        # Set pixel values retreived from cpu mem
-        for index, pixel in enumerate(self.pixel_list):
+        # Set pixel values retrieved from cpu mem
+        for index, pixel in enumerate(self.__pixel_list):
             pixel.set_color(self.get_color(cpu.memory[index]))
         # Draw pixels
-        for pixel in self.pixel_list:
-            pixel.render(self.game_display)
+        for pixel in self.__pixel_list:
+            pixel.render(self.__game_display)
         pygame.display.flip()
