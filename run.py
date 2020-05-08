@@ -1,8 +1,13 @@
+import argparse
+import sys
 from typing import List, Dict
 from helpers.token import Token
 from helpers.enums import TokenType
 from helpers.opcodes import cpu_opcodes, JP
 from helpers.exceptions import ASMSyntaxError, DisplayClosed
+from helpers.utilities import Utilities
+import lexer
+import token_parser
 from cpu import Cpu
 from display import Display
 
@@ -60,7 +65,29 @@ def runner(cpu: Cpu, parsed_tokens: List[List[Token]], display: Display = None) 
     # Check if a display is supplied
     if display:
         if display.draw(cpu):
-            raise DisplayClosed(63, "Display has been closed")  # Hardcoded line number, not nice :/
+            raise DisplayClosed(None, "Display has been closed")
 
     # call the runner recursively
     return runner(cpu, parsed_tokens, display)
+
+
+if __name__ == "__main__":
+    # Increase recursion limit
+    sys.setrecursionlimit(10**6)
+    # Parse arguments
+    parser = argparse.ArgumentParser(description='GameBoy (Z80) ASM interpreter')
+    parser.add_argument('--input', metavar='i', type=str, help='a Z80 assembly file', required=True)
+    parser.add_argument('--display', metavar='d', type=bool, default=False, help='Enable display?')
+    args = parser.parse_args()
+    # Create display variable, set initially to None
+    display = None
+    # Create CPU object
+    z80 = Cpu()
+    if args.display:
+        display = Display()
+    # Execute interpreter
+    parsed = token_parser.parser(lexer.lexer(Utilities.read_asm_file(args.input)))
+    runner(z80, parsed, display)
+    # Print out the cpu registers after runner has finished
+    print(z80)
+    exit(0)  # Close program
