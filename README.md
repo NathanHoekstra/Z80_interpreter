@@ -3,11 +3,11 @@ A Z80 ASM interpreter (emulator) written in Python
 
 ## Features
 
-- Parser for loading in assembly (.asm) files (IO)
+- Parser for loading in assembly (.asm) files (I/O)
 - Lexer to tokenize the input file
 - Parser to check the validity of the tokens
 - Runner to execute the parsed tokens
-- 16x16 pixel display that reads pixel color values from CPU memory (IO)
+- 16x16 pixel display that reads pixel color values from CPU memory (I/O)
 - Error handling, invalid assembly lines are printed to the console
 
 ## Limitations
