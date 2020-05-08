@@ -86,7 +86,9 @@ if __name__ == "__main__":
     if args.display:
         display = Display()
     # Execute interpreter
+    print(f"[INFO] Parsing the specified asm file: {args.input}")
     parsed = token_parser.parser(lexer.lexer(Utilities.read_asm_file(args.input)))
+    print("[INFO] Executing the ASM file...")
     runner(z80, parsed, display)
     # Print out the cpu registers after runner has finished
     print(z80)
